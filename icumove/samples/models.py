@@ -26,3 +26,10 @@ class Air(models.Model):
 	pump = models.IntegerField(choices=PUMP_CHOICES, verbose_name='Pump Number'),
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
 
+class Door(models.Model):
+	date = models.DateField(verbose_name="Sample Date"),
+	time = models.TimeFields(verbose_name="Time of Sample"),
+	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
+
+
+
