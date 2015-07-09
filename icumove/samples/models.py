@@ -16,8 +16,8 @@ class Air(models.Model):
 	PUMP_CHOICES = zip(range(1,10), range(1,10))
 
 	SIDE_CHOICES = (
-		'A' = 'Outside of Reception, "Aft"', 
-		'B' = 'Inside of Reception, "Bow"'
+		'A', 'Outside of Reception, "Aft"', 
+		'B', 'Inside of Reception, "Bow"'
 	)
 
 	date = models.DateField(verbose_name="Sample Date"),
@@ -43,5 +43,5 @@ class Stool(models.Model):
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location"),
 	room = models.CharField(max_length=4, verbose_name="Room Number")
 	emr = models.CharField(max_length=10, verbose_name="Epic Medical Record Number)"
-	
+
 
