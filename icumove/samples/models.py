@@ -31,5 +31,9 @@ class Door(models.Model):
 	time = models.TimeFields(verbose_name="Time of Sample"),
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 
+class Floor(models.Model):
+	date = models.DateField(verbose_name="Sample Date"),
+	time = models.TimeFields(verbose_name="Time of Sample"),
+	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 
 
