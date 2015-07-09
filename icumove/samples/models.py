@@ -34,6 +34,14 @@ class Door(models.Model):
 class Floor(models.Model):
 	date = models.DateField(verbose_name="Sample Date"),
 	time = models.TimeFields(verbose_name="Time of Sample"),
-	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
+	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
 
+class Stool(models.Model):
+	class Floor(models.Model):
+	date = models.DateField(verbose_name="Sample Date"),
+	time = models.TimeFields(verbose_name="Time of Sample"),
+	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location"),
+	room = models.CharField(max_length=4, verbose_name="Room Number")
+	emr = models.CharField(max_length=10, verbose_name="Epic Medical Record Number)"
+	
 
