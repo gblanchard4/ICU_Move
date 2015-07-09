@@ -16,8 +16,8 @@ class Air(models.Model):
 	PUMP_CHOICES = zip(range(1,10), range(1,10))
 
 	SIDE_CHOICES = (
-		'A', 'Outside of Reception, "Aft"', 
-		'B', 'Inside of Reception, "Bow"'
+		('A', 'Outside of Reception, "Aft"'), 
+		('B', 'Inside of Reception, "Bow"')
 	)
 
 	date = models.DateField(verbose_name="Sample Date"),
