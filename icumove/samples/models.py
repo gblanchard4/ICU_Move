@@ -1,4 +1,27 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+
+# Validators 
+# make sure a pressure room is only one of the following
+def validate_pressure(room):
+	pressure_rooms = ['4115','4116','4117','4141','4142','4143','4215','4241','4315','4341']
+	if not room in pressure_rooms:
+		raise ValidationError('%s is not a valid pressure room' % room)
+
+# # Make sure room number is valid
+# def validate_room(tower, room):
+# 	tower_dict = {'O':'1', 'G':'2', 'P':'3'}
+# 	valid_room_enders = ('15','16','17','18','19','20','32','33','34','35','36','37','41','42','43','44','45','46','61','62','63','64','65','66')
+# 	if not tower_dict[tower] == room[2]:
+# 		raise ValidationError('Room %s can not be in tower %s' % (room, tower)
+# 	if not room[2::] in valid_room_enders:
+# 		raise ValidationError('Room %s is not a valid room, hint check %s' % (room, room[2::])
+
+
+
+
+
+
 
 # Create your models here.
 
@@ -13,46 +36,77 @@ ICU_CHOICES = (
 # Air sample model
 class Air(models.Model):
 
-	PUMP_CHOICES = zip(range(1,10), range(1,10))
-
-	SIDE_CHOICES = (
-		('A', 'Outside of Reception, "Aft"'), 
-		('B', 'Inside of Reception, "Bow"')
+	PUMP_CHOICES = (
+		('A', 'ICS Station A'), 
+		('B', 'ICS Station B'),
+		('C', 'ICS Station C'),
+		('W', 'Waiting Room')
 	)
 
-	date = models.DateField(verbose_name="Sample Date"),
-	time = models.TimeField(verbose_name="Time of Sample"),
-	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location'),
-	pump = models.IntegerField(choices=PUMP_CHOICES, verbose_name='Pump Number'),
+	SIDE_CHOICES = (
+		('1', 'Filter 1'), 
+		('2', 'Filter 2')
+	)
+
+	sample_date = models.DateField(verbose_name="Sample Date")
+	time = models.TimeField(verbose_name="Time of Sample")
+	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
+	pump = models.CharField(max_length=1, choices=PUMP_CHOICES, verbose_name='Pump Number')
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
-
+		
+	def _get_day(self):
+		return self.sample_date.day
+	day = property(_get_day)
+	
 	def __str__(self):
-		return str("A-{}-{}-{}-{}{}{}{}".format(self.tower, self.date, self.time, self.tower, self.pump, self.side, self.day))
-
+		return str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.pump, self.side, self.day))
 
 
 class Door(models.Model):
-	date = models.DateField(verbose_name="Sample Date"),
-	time = models.TimeField(verbose_name="Time of Sample"),
+	sample_date = models.DateField(verbose_name="Sample Date")
+	time = models.TimeField(verbose_name="Time of Sample")
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
+	day = models.CharField(max_length=2, default='00')
 
+	def _get_day(self):
+		return self.sample_date.day
+	day = property(_get_day)
+	
 	def __str__(self):
-		return str("D-{}-{}-{}-{}DC{}".format(self.tower, self.date, self.time, self.tower, self.day))
+		return str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.day))
 
 class Floor(models.Model):
-	date = models.DateField(verbose_name="Sample Date"),
-	time = models.TimeField(verbose_name="Time of Sample"),
+	sample_date = models.DateField(verbose_name="Sample Date")
+	time = models.TimeField(verbose_name="Time of Sample")
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
+	day = models.CharField(max_length=2, default='00')
 
+	def _get_day(self):
+		return self.sample_date.day
+	day = property(_get_day)
+	
 	def __str__(self):
-		return str("F-{}-{}-{}-{}FC{}".format(self.tower, self.date, self.time, self.tower, self.day))
+		return str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.day))
 
 class Stool(models.Model):
-	date = models.DateField(verbose_name="Sample Date"),
-	time = models.TimeField(verbose_name="Time of Sample"),
-	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location"),
+
+	PRESSURE_CHOICES = (
+		('NAN', 'Not Pressured'),
+		('NEG', 'Negative Pressure'),
+		('POS', 'Positive Pressure')
+	)
+
+	sample_date = models.DateField(verbose_name="Sample Date")
+	time = models.TimeField(verbose_name="Time of Sample")
+	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
 	room = models.CharField(max_length=4, verbose_name="Room Number")
+	pressure = models.CharField(max_length=3, choices=PRESSURE_CHOICES, verbose_name="Room pressure")
 	emr = models.CharField(max_length=10, verbose_name="Epic Medical Record Number)")
+	day = models.CharField(max_length=2, default='00')
+
+	def _get_day(self):
+		return self.sample_date.day
+	day = property(_get_day)
 
 	def __str__(self):
-		return str("A-{}-{}-{}-{}".format(self.tower, self.date, self.time, self.room))
+		return str("A-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.room, self.emr))
