@@ -1,28 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
-# Validators 
-# make sure a pressure room is only one of the following
-def validate_pressure(room):
-	pressure_rooms = ['4115','4116','4117','4141','4142','4143','4215','4241','4315','4341']
-	if not room in pressure_rooms:
-		raise ValidationError('%s is not a valid pressure room' % room)
-
-# # Make sure room number is valid
-# def validate_room(tower, room):
-# 	tower_dict = {'O':'1', 'G':'2', 'P':'3'}
-# 	valid_room_enders = ('15','16','17','18','19','20','32','33','34','35','36','37','41','42','43','44','45','46','61','62','63','64','65','66')
-# 	if not tower_dict[tower] == room[2]:
-# 		raise ValidationError('Room %s can not be in tower %s' % (room, tower)
-# 	if not room[2::] in valid_room_enders:
-# 		raise ValidationError('Room %s is not a valid room, hint check %s' % (room, room[2::])
-
-
-
-
-
-
-
 # Create your models here.
 
 ICU_CHOICES = (
@@ -96,6 +74,7 @@ class Stool(models.Model):
 		('POS', 'Positive Pressure')
 	)
 
+
 	sample_date = models.DateField(verbose_name="Sample Date")
 	time = models.TimeField(verbose_name="Time of Sample")
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
@@ -110,3 +89,28 @@ class Stool(models.Model):
 
 	def __str__(self):
 		return str("A-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.room, self.emr))
+
+	# Custom Primary Key
+	def keymaker(self):
+		return str("A{}{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.room, self.emr))
+	custom_key = keymaker(self)
+	key_field = models.CharField(primary_key=True, default=custom_key)
+
+	## Clean Overide for Validation
+
+	def clean(self):
+		# Make sure only rooms that have preassure panels select and option
+		pressure_rooms = ['4115','4116','4117','4141','4142','4143','4215','4241','4315','4341']
+		if self.pressure == 'NEG' and not self.room in pressure_rooms:
+			raise ValidationError('%s is not a valid negative pressure room' % self.room)
+		if self.pressure == 'POS' and not self.room in pressure_rooms:
+			raise ValidationError('%s is not a valid positive pressure room' % self.room)
+
+		# Validate Room numbers
+
+		tower_dict = {'O':'1', 'G':'2', 'P':'3'}
+		if not tower_dict[self.icu] == self.room[1]:
+			raise ValidationError('Room %s can not be in tower %s' % (self.room, self.icu))
+		valid_room_enders = ['15','16','17','18','19','20','32','33','34','35','36','37','41','42','43','44','45','46','61','62','63','64','65','66']
+		if not self.room[2::] in valid_room_enders:
+			raise ValidationError('Room %s is not a valid room, hint check %s' % (self.room, self.room[2::]))
