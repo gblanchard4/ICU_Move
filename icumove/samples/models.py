@@ -84,7 +84,7 @@ class Floor(models.Model):
 	class Meta:
 		unique_together = ("sample_date", "icu", "day")
 
-	def save():
+	def save(self):
 		super(Floor, self).save()
 		# calculate day from DAY_1
 		self.day = (self.sample_date - DAY_1).days
@@ -134,7 +134,7 @@ class Stool(models.Model):
 		if not self.room[2::] in valid_room_enders:
 			raise ValidationError('Room %s is not a valid room, hint check %s' % (self.room, self.room[2::]))
 
-	def save():
+	def save(self):
 		super(Stool, self).save()
 		# calculate day from DAY_1
 		self.day = (self.sample_date - DAY_1).days
