@@ -1,7 +1,11 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from datetime import date
 
-# Create your models here.
+# Global values
+
+DAY_1 = date(2015,07,04)
+print type(DAY_1)
 
 ICU_CHOICES = (
 	('M', 'ILH M-ICU'),
@@ -31,13 +35,21 @@ class Air(models.Model):
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 	pump = models.CharField(max_length=1, choices=PUMP_CHOICES, verbose_name='Pump Number')
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
-		
-	def _get_day(self):
-		return self.sample_date.day
-	day = property(_get_day)
+	day = models.CharField(max_length=2, default='00')
 	
 	def __str__(self):
 		return str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.pump, self.side, self.day))
+
+	# Unique together
+	class Meta:
+		unique_together = ("sample_date", "icu", "pump", "side")
+
+	def save(self):
+		super(Air, self).save()
+		# calculate day from DAY_1
+		self.day = (self.sample_date - DAY_1).days
+		super(Air, self).save()
+	
 
 
 class Door(models.Model):
@@ -45,13 +57,19 @@ class Door(models.Model):
 	time = models.TimeField(verbose_name="Time of Sample")
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 	day = models.CharField(max_length=2, default='00')
-
-	def _get_day(self):
-		return self.sample_date.day
-	day = property(_get_day)
 	
 	def __str__(self):
 		return str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.day))
+
+	# Unique together
+	class Meta:
+		unique_together = ("sample_date", "icu", "day")
+
+	def save():
+		super(Door, self).save()
+		# calculate day from DAY_1
+		self.day = (self.sample_date - DAY_1).days
+		super(Door, self).save()
 
 class Floor(models.Model):
 	sample_date = models.DateField(verbose_name="Sample Date")
@@ -59,12 +77,18 @@ class Floor(models.Model):
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
 	day = models.CharField(max_length=2, default='00')
 
-	def _get_day(self):
-		return self.sample_date.day
-	day = property(_get_day)
-	
 	def __str__(self):
 		return str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.day))
+
+	# Unique together
+	class Meta:
+		unique_together = ("sample_date", "icu", "day")
+
+	def save():
+		super(Floor, self).save()
+		# calculate day from DAY_1
+		self.day = (self.sample_date - DAY_1).days
+		super(Floor, self).save()
 
 class Stool(models.Model):
 
@@ -83,21 +107,16 @@ class Stool(models.Model):
 	emr = models.CharField(max_length=10, verbose_name="Epic Medical Record Number)")
 	day = models.CharField(max_length=2, default='00')
 
-	def _get_day(self):
-		return self.sample_date.day
-	day = property(_get_day)
-
 	def __str__(self):
-		return str("A-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.room, self.emr))
+		return str("S-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.room, self.emr))
 
-	# Custom Primary Key
-	def keymaker(self):
-		return str("A{}{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.room, self.emr))
-	custom_key = keymaker(self)
-	key_field = models.CharField(primary_key=True, default=custom_key)
+	# Unique together
+	class Meta:
+		unique_together = ("sample_date", "time", "icu", "room", "emr")
 
-	## Clean Overide for Validation
 
+
+	# Clean Overide for Validation
 	def clean(self):
 		# Make sure only rooms that have preassure panels select and option
 		pressure_rooms = ['4115','4116','4117','4141','4142','4143','4215','4241','4315','4341']
@@ -114,3 +133,12 @@ class Stool(models.Model):
 		valid_room_enders = ['15','16','17','18','19','20','32','33','34','35','36','37','41','42','43','44','45','46','61','62','63','64','65','66']
 		if not self.room[2::] in valid_room_enders:
 			raise ValidationError('Room %s is not a valid room, hint check %s' % (self.room, self.room[2::]))
+
+	def save():
+		super(Stool, self).save()
+		# calculate day from DAY_1
+		self.day = (self.sample_date - DAY_1).days
+		super(Stool, self).save()
+
+
+
