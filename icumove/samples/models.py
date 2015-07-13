@@ -5,7 +5,6 @@ from datetime import date
 # Global values
 
 DAY_1 = date(2015,07,04)
-print type(DAY_1)
 
 ICU_CHOICES = (
 	('M', 'ILH M-ICU'),
@@ -35,7 +34,10 @@ class Air(models.Model):
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 	pump = models.CharField(max_length=1, choices=PUMP_CHOICES, verbose_name='Pump Number')
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
+	# Calculated
 	day = models.CharField(max_length=2, default='00')
+	uid = models.CharField(max_length=16)
+
 	
 	def __str__(self):
 		return str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.pump, self.side, self.day))
@@ -47,7 +49,9 @@ class Air(models.Model):
 	def save(self):
 		super(Air, self).save()
 		# calculate day from DAY_1
-		self.day = (self.sample_date - DAY_1).days
+		self.day = "%02d" % (self.sample_date - DAY_1).days
+		# UID
+		self.uid = str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.pump, self.side, self.day))
 		super(Air, self).save()
 	
 
@@ -57,6 +61,7 @@ class Door(models.Model):
 	time = models.TimeField(verbose_name="Time of Sample")
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 	day = models.CharField(max_length=2, default='00')
+	uid = models.CharField(max_length=16)
 	
 	def __str__(self):
 		return str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.day))
@@ -68,7 +73,9 @@ class Door(models.Model):
 	def save():
 		super(Door, self).save()
 		# calculate day from DAY_1
-		self.day = (self.sample_date - DAY_1).days
+		self.day = "%02d" % (self.sample_date - DAY_1).days
+		# UID
+		self.uid = str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.pump, self.side, self.day))
 		super(Door, self).save()
 
 class Floor(models.Model):
@@ -76,6 +83,7 @@ class Floor(models.Model):
 	time = models.TimeField(verbose_name="Time of Sample")
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
 	day = models.CharField(max_length=2, default='00')
+	uid = models.CharField(max_length=16)
 
 	def __str__(self):
 		return str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.day))
@@ -87,7 +95,9 @@ class Floor(models.Model):
 	def save(self):
 		super(Floor, self).save()
 		# calculate day from DAY_1
-		self.day = (self.sample_date - DAY_1).days
+		self.day = "%02d" % (self.sample_date - DAY_1).days
+		# UID
+		self.uid = str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.pump, self.side, self.day))
 		super(Floor, self).save()
 
 class Stool(models.Model):
@@ -106,6 +116,7 @@ class Stool(models.Model):
 	pressure = models.CharField(max_length=3, choices=PRESSURE_CHOICES, verbose_name="Room pressure")
 	emr = models.CharField(max_length=10, verbose_name="Epic Medical Record Number)")
 	day = models.CharField(max_length=2, default='00')
+	uid = models.CharField(max_length=27)
 
 	def __str__(self):
 		return str("S-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.room, self.emr))
@@ -137,7 +148,9 @@ class Stool(models.Model):
 	def save(self):
 		super(Stool, self).save()
 		# calculate day from DAY_1
-		self.day = (self.sample_date - DAY_1).days
+		self.day = "%02d" % (self.sample_date - DAY_1).days
+		# UID
+		self.uid = str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.pump, self.side, self.day))
 		super(Stool, self).save()
 
 

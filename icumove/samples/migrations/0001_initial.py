@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
                 ('pump', models.CharField(max_length=1, verbose_name=b'Pump Number', choices=[(b'A', b'ICS Station A'), (b'B', b'ICS Station B'), (b'C', b'ICS Station C'), (b'W', b'Waiting Room')])),
                 ('side', models.CharField(max_length=1, verbose_name=b'Pump Side', choices=[(b'1', b'Filter 1'), (b'2', b'Filter 2')])),
                 ('day', models.CharField(default=b'00', max_length=2)),
+                ('uid', models.CharField(max_length=16)),
             ],
         ),
         migrations.CreateModel(

@@ -4,7 +4,7 @@ from .models import Air, Stool, Floor, Door
 # Admin Model views
 
 class AirAdmin(admin.ModelAdmin):
-	list_display = ('sample_date','time','icu','pump','side', 'day')
+	list_display = ('uid','sample_date','time','icu','pump','side', 'day')
 	fieldsets = (
 		('Date and Time',{
 			'fields':['sample_date','time']
