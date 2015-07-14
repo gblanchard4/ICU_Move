@@ -1,0 +1,27 @@
+<h1>Air Samples</h1>
+{% if airs_list %}
+	<table>
+		<tr>
+			<td><h2>UID </h2></td>
+			<td><h2>Date </h2></td>
+			<td><h2>Time </h2></td>
+			<td><h2>ICU </h2></td>
+			<td><h2>Pump </h2></td>
+			<td><h2>Side </h2></td>
+			<td><h2>Day </h2></td>
+		</tr>
+	{% for air in airs_list %}
+			<tr>
+				<td><a href="/samples/air/{{ air.uid }}/air_detail.html">{{ air.uid }}</a><td>
+				<td>{{ air.sample_date | date:"dy"}}</td>
+				<td>{{ air.time | time:"H"}}</td>
+				<td>{{ air.icu }}</td>
+				<td>{{ air.pump }}</td>
+				<td>{{ air.side }}</td>
+				<td>{{ air.day }}</td>
+			</tr>
+	{% endfor %}
+	</table>
+{% else %}
+	<p>No air samples have been entered</p>
+{% endif %}

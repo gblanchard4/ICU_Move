@@ -1,0 +1,23 @@
+<h1>Floors List</h1>
+{% if floors_list %}
+	<table>
+		<tr>
+			<td><h2>UID </h2></td>
+			<td><h2>Date </h2></td>
+			<td><h2>Time </h2></td>
+			<td><h2>ICU </h2></td>
+			<td><h2>Day </h2></td>
+		</tr>
+	{% for floor in floors_list %}
+			<tr>
+				<td><a href="/samples/floor/{{ floor.uid }}/">{{ floor.uid }}</a><td>
+				<td>{{ floor.sample_date | date:"dy"}}</td>
+				<td>{{ floor.time | time:"H"}}</td>
+				<td>{{ floor.icu }}</td>
+				<td>{{ floor.day }}</td>
+			</tr>
+	{% endfor %}
+	</table>
+{% else %}
+	<p>No floor samples have been entered</p>
+{% endif %}

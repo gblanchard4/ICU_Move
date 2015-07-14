@@ -1,0 +1,23 @@
+<h1>Doors List</h1>
+{% if doors_list %}
+	<table>
+		<tr>
+			<td><h2>UID </h2></td>
+			<td><h2>Date </h2></td>
+			<td><h2>Time </h2></td>
+			<td><h2>ICU </h2></td>
+			<td><h2>Day </h2></td>
+		</tr>
+	{% for door in doors_list %}
+			<tr>
+				<td><a href="/samples/air/{{ door.uid }}/">{{ door.uid }}</a><td>
+				<td>{{ door.sample_date | date:"dy"}}</td>
+				<td>{{ door.time | time:"H"}}</td>
+				<td>{{ door.icu }}</td>
+				<td>{{ door.day }}</td>
+			</tr>
+	{% endfor %}
+	</table>
+{% else %}
+	<p>No door samples have been entered</p>
+{% endif %}

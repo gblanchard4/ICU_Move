@@ -1,0 +1,29 @@
+<h1>Stool List</h1>
+{% if stools_list %}
+	<table>
+		<tr>
+			<td><h2>UID </h2></td>
+			<td><h2>Date </h2></td>
+			<td><h2>Time </h2></td>
+			<td><h2>ICU </h2></td>
+			<td><h2>Room </h2></td>
+			<td><h2>Pressure</h2></td>
+			<td><h2>EMR </h2></td>
+			<td><h2>Day </h2></td>
+		</tr>
+	{% for stool in stools_list %}
+			<tr>
+				<td><a href="/samples/stool/{{ stool.uid }}/">{{ stool.uid }}</a><td>
+				<td>{{ stool.sample_date | date:"dy"}}</td>
+				<td>{{ stool.time | time:"H"}}</td>
+				<td>{{ stool.icu }}</td>
+				<td>{{ stool.room }}</td>
+				<td>{{ stool.pressure}}</td>
+				<td>{{ stool.emr }}</td>
+				<td>{{ stool.day }}</td>
+			</tr>
+	{% endfor %}
+	</table>
+{% else %}
+	<p>No stool samples have been entered</p>
+{% endif %}

@@ -1,0 +1,45 @@
+<h1>Samples List</h1>
+{% if samples_list %}
+	<h2><a href="/samples/air">Air Samples</a></h2>
+	{% if airs_list %}
+		<ul>
+		{% for air in airs_list %}
+			<li><a href="/samples/air/{{ air.uid }}/">{{ air.uid }}</a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No air samples have been entered</p>
+	{% endif %}
+	<h2><a href="/samples/stool">Stools Samples</a></h2>
+	{% if stools_list %}
+		<ul>
+		{% for stool in stools_list %}
+			<li><a href="/samples/stool/{{ stool.uid }}/">{{ stool.uid }}</a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No stool samples have been entered</p>
+	{% endif %}
+	<h2><a href="/samples/door">Doors list</a></h2>
+	{% if doors_list %}
+		<ul>
+		{% for door in doors_list %}
+			<li><a href="/samples/door/{{ door.uid }}/">{{ door.uid }}</a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No door samples have been entered</p>
+	{% endif %}
+	<h2><a href="/samples/floor">Floors List</a></h2>
+	{% if floors_list %}
+		<ul>
+		{% for floor in floors_list %}
+			<li><a href="/samples/floor/{{ floor.uid }}/">{{ floor.uid }}</a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No floor samples have been entered</p>
+	{% endif %}
+{% else %}
+	<p>No samples have been entered</p>
+{% endif %}

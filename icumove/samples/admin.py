@@ -15,18 +15,21 @@ class AirAdmin(admin.ModelAdmin):
 	)
 
 class StoolAdmin(admin.ModelAdmin):
-	list_display = ('sample_date','time','icu','room','pressure','emr','day')
+	list_display = ('uid','sample_date','time','icu','room','pressure','emr','day')
 	fieldsets = (
 		('Date and Time',{
 			'fields':['sample_date','time']
 		}),
 		('Location',{
-			'fields':['icu',('room','pressure'),'emr']
+			'fields':['icu',('room','pressure')]
+		}),
+		('Patient',{
+			'fields':['emr']
 		})
 	)
 
 class FloorAdmin(admin.ModelAdmin):
-	list_display = ('sample_date','time','icu','day')
+	list_display = ('uid','sample_date','time','icu','day')
 	fieldsets = (
 		('Date and Time',{
 			'fields':['sample_date','time']
@@ -37,7 +40,7 @@ class FloorAdmin(admin.ModelAdmin):
 	)
 
 class DoorAdmin(admin.ModelAdmin):
-	list_display = ('sample_date','time','icu','day')
+	list_display = ('uid','sample_date','time','icu','day')
 	fieldsets = (
 		('Date and Time',{
 			'fields':['sample_date','time']
