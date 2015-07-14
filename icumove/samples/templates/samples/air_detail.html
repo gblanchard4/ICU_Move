@@ -1,15 +1,152 @@
-<h1>Air Detail</h1>
-<h2>UID </h2>
-<ul><li>{{ air.uid }}</li></ul>
-<h2>Date </h2>
-<ul><li>{{ air.sample_date | date:"dy"}}</li></ul>
-<h2>Time </h2>
-<ul><li>{{ air.time | time:"H"}}</li></ul>
-<h2>ICU </h2>
-<ul><li>{{ air.icu }}</li></ul>
-<h2>Pump </h2>
-<ul><li>{{ air.pump }}</li></ul>
-<h2>Side </h2>
-<ul><li>{{ air.side }}</li></ul>
-<h2>Day </h2>
-<ul><li>{{ air.day }}</li></ul>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Material Design Lite</title>
+    
+        <!-- Add to homescreen for Chrome on Android -->
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+    
+        <!-- Add to homescreen for Safari on iOS -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+        <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+    
+    
+            <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+        <!--
+        <link rel="canonical" href="http://www.example.com/">
+        -->
+    
+            <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'samples/material.min.css' %}">
+        <link rel="stylesheet" href="{% static 'samples/styles.css' %}">
+        <style>
+        #view-source {
+            position: fixed;
+            display: block;
+            right: 0;
+            bottom: 0;
+            margin-right: 40px;
+            margin-bottom: 40px;
+            z-index: 900;
+        }
+        </style>
+    </head>
+
+ <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout__header-row">
+          <h3>ICU Move Samples</h3>
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+          <a href="/samples/" class="mdl-layout__tab">Overview</a>
+          <a href="/samples/air" class="mdl-layout__tab is-active">Air</a>
+          <a href="/samples/stool" class="mdl-layout__tab">Stool</a>
+          <a href="/samples/door" class="mdl-layout__tab">Door</a>
+          <a href="/samples/floor" class="mdl-layout__tab">Floor</a>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Material Design Lite</span>
+        <nav class="mdl-navigation">
+          <a href="/samples" class="mdl-navigation__link">Overview</a>
+          <a href="/samples/air" class="mdl-navigation__link">Air</a>
+          <a href="/samples/stool" class="mdl-navigation__link">Stool</a>
+          <a href="/samples/door" class="mdl-navigation__link">Door</a>
+          <a href="/samples/floor" class="mdl-navigation__link">Floor</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="mdl-layout__tab-panel is-active" id="overview">
+            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+        <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+                <h4 class="mdl-cell mdl-cell--12-col">Air Sample: {{ air.uid }}</h4>    
+            </div>
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    <table>
+                        <tr>
+                            <td>Date:</td>
+                            <td>{{ air.sample_date | date:"md" }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    <table>
+                        <tr>
+                            <td>Time:</td>
+                            <td>{{ air.time | time:"H" }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    <table>
+                        <tr>
+                            <td>ICU:</td>
+                            <td>{{ air.icu }}</td>
+                        </tr>
+                    </table>                    
+                </div>
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    <table>
+                        <tr>
+                            <td>Pump:</td>
+                            <td>{{ air.pump }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    <table>
+                        <tr>
+                            <td>Side:</td>
+                            <td>{{ air.side }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    <table>
+                        <tr>
+                            <td>Day:</td>
+                            <td>{{ air.day }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </section>
+        </div>
+        
+        <footer class="mdl-mega-footer">
+          <div class="mdl-mega-footer--bottom-section">
+            <div class="mdl-logo">
+                Copyright Gene Blanchard 2015
+            </div>
+            <ul class="mdl-mega-footer--link-list">
+              <li><a href="http://www.getmdl.io/">Built with MDL</a></li>
+            </ul>
+          </div>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

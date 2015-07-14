@@ -11,14 +11,16 @@ from .models import Air, Stool, Door, Floor
 
 # All the samples together
 def index(request):
-	airs_list = Air.objects.order_by('sample_date')
-	stools_list = Stool.objects.order_by('sample_date')
-	doors_list = Door.objects.order_by('sample_date')
-	floors_list = Floor.objects.order_by('sample_date')
-	samples_list = list(chain(airs_list, stools_list, doors_list, floors_list))
+	airs_count = len(Air.objects.all())
+	stools_count = len(Stool.objects.all())
+	doors_count = len(Door.objects.all())
+	floors_count = len(Floor.objects.all())
+
+	samples_count = airs_count + stools_count + doors_count + floors_count
+
 
 	template = 'samples/index.html'
-	context = {'samples_list':samples_list, 'airs_list':airs_list, 'stools_list':stools_list, 'doors_list':doors_list, 'floors_list':floors_list}
+	context = {'samples':samples_count, 'airs':airs_count, 'stools':stools_count, 'doors':doors_count, 'floors':floors_count}
 
 	return render(request, template, context)
 
