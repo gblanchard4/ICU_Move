@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^floor/$', views.floor_index, name='floor index'),
     # ex: /samples/floor/[UID]
     url(r'^floor/(?P<uid>[^/]+)', views.floor_detail, name='floor detail'),
+    # ex: /samples/date/[date]
+    url(r'^date/(?P<date>[^/]+)', views.date_view, name='date detail'),
 ]
