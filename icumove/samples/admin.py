@@ -9,8 +9,11 @@ class AirAdmin(admin.ModelAdmin):
 		('Date and Time',{
 			'fields':['sample_date','time']
 		}),
-		('Location',{
+		('Collection Location',{
 			'fields':['icu','pump','side']
+		}),
+		('Storage Location',{
+			'fields':['tub','freezer','shelf','rack','box']
 		})
 	)
 
@@ -20,11 +23,14 @@ class StoolAdmin(admin.ModelAdmin):
 		('Date and Time',{
 			'fields':['sample_date','time']
 		}),
-		('Location',{
+		('Collection Location',{
 			'fields':['icu',('room','pressure')]
 		}),
 		('Patient',{
 			'fields':['emr']
+		}),
+		('Storage Location',{
+			'fields':['freezer','shelf','rack','box']
 		})
 	)
 
@@ -34,8 +40,11 @@ class FloorAdmin(admin.ModelAdmin):
 		('Date and Time',{
 			'fields':['sample_date','time']
 		}),
-		('Location',{
+		('Collection Location',{
 			'fields':['icu']
+		}),
+		('Storage Location',{
+			'fields':['freezer','shelf','rack','box']
 		})
 	)
 
@@ -45,8 +54,11 @@ class DoorAdmin(admin.ModelAdmin):
 		('Date and Time',{
 			'fields':['sample_date','time']
 		}),
-		('Location',{
+		('Collection Location',{
 			'fields':['icu']
+		}),
+		('Storage Location',{
+			'fields':['freezer','shelf','rack','box']
 		})
 	)
 
