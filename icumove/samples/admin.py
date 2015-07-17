@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import Air, Stool, Floor, Door
 
 # Admin Model views
-
 class AirAdmin(admin.ModelAdmin):
 	list_display = ('uid','sample_date','time','icu','pump','side', 'day')
 	fieldsets = (
