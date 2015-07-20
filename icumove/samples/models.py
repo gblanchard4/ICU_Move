@@ -43,7 +43,6 @@ class Air(models.Model):
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
 	# Storage Location
 	tub = models.CharField(max_length=1, choices=TUB_CHOICES, verbose_name='Storage Tub')
-	freezer = models.CharField(max_length=2, verbose_name='Freezer', blank=True)
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
 	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
@@ -59,7 +58,7 @@ class Air(models.Model):
 	# Unique together
 	class Meta:
 		unique_together = ("sample_date", "icu", "pump", "side")
-		unique_together = ("freezer", "rack", "shelf", "box")
+		unique_together = ("rack", "shelf", "box")
 
 	def save(self):
 		# calculate day from DAY_1

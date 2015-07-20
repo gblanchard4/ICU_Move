@@ -17,8 +17,17 @@
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
   margin: 0;
-  padding: 0;
+  height: 100%;
+  padding:10px;
 }
+
+footer {
+    height: 50px;
+    left: 0;
+    position: static;
+    width: 100%;
+}
+
 .mdl-demo .mdl-layout__header-row {
   padding-left: 40px;
   height: 53px;
@@ -257,8 +266,3 @@ html, body {
   z-index: 99;
 }
 
-#footer {
-  position: relative;
-  bottom: 0px;
-  width: 100%;
-}
