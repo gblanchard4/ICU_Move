@@ -12,7 +12,7 @@ class AirAdmin(admin.ModelAdmin):
 			'fields':['icu','pump','side']
 		}),
 		('Storage Location',{
-			'fields':['tub','freezer','shelf','rack','box']
+			'fields':['tub','shelf','rack','box']
 		})
 	)
 
@@ -29,7 +29,7 @@ class StoolAdmin(admin.ModelAdmin):
 			'fields':['emr']
 		}),
 		('Storage Location',{
-			'fields':['freezer','shelf','rack','box']
+			'fields':['shelf','rack','box']
 		})
 	)
 
@@ -43,7 +43,7 @@ class FloorAdmin(admin.ModelAdmin):
 			'fields':['icu']
 		}),
 		('Storage Location',{
-			'fields':['freezer','shelf','rack','box']
+			'fields':['shelf','rack','box']
 		})
 	)
 
@@ -57,7 +57,7 @@ class DoorAdmin(admin.ModelAdmin):
 			'fields':['icu']
 		}),
 		('Storage Location',{
-			'fields':['freezer','shelf','rack','box']
+			'fields':['shelf','rack','box']
 		})
 	)
 

@@ -54,7 +54,7 @@ class Air(models.Model):
 
 	
 	def __str__(self):
-		return str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.pump, self.side, self.day))
+		return str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.pump, self.side, self.day))
 
 	# Unique together
 	class Meta:
@@ -65,7 +65,7 @@ class Air(models.Model):
 		# calculate day from DAY_1
 		self.day = "%02d" % (self.sample_date - DAY_1).days
 		# UID
-		self.uid = str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.pump, self.side, self.day))
+		self.uid = str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.pump, self.side, self.day))
 		super(Air, self).save()
 	
 
@@ -77,13 +77,12 @@ class Door(models.Model):
 	day = models.CharField(max_length=2, default='00')
 	uid = models.CharField(primary_key=True, max_length=16, unique=True)
 	# Storage Location
-	freezer = models.CharField(max_length=2, verbose_name='Freezer', blank=True)
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
 	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
 	
 	def __str__(self):
-		return str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.day))
+		return str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
 
 	# Unique together
 	class Meta:
@@ -93,7 +92,7 @@ class Door(models.Model):
 		# calculate day from DAY_1
 		self.day = "%02d" % (self.sample_date - DAY_1).days
 		# UID
-		self.uid = str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.day))
+		self.uid = str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
 		super(Door, self).save()
 
 class Floor(models.Model):
@@ -103,13 +102,12 @@ class Floor(models.Model):
 	day = models.CharField(max_length=2, default='00')
 	uid = models.CharField(primary_key=True, max_length=16, unique=True)
 	# Storage Location
-	freezer = models.CharField(max_length=2, verbose_name='Freezer', blank=True)
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
 	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
 
 	def __str__(self):
-		return str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.day))
+		return str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
 
 	# Unique together
 	class Meta:
@@ -121,7 +119,7 @@ class Floor(models.Model):
 		# calculate day from DAY_1
 		self.day = "%02d" % (self.sample_date - DAY_1).days
 		# UID
-		self.uid = str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.icu, self.day))
+		self.uid = str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
 		super(Floor, self).save()
 
 class Stool(models.Model):
@@ -141,13 +139,12 @@ class Stool(models.Model):
 	day = models.CharField(max_length=2, default='00')
 	uid = models.CharField(primary_key=True, max_length=27, unique=True)
 	# Storage Location
-	freezer = models.CharField(max_length=2, verbose_name='Freezer', blank=True)
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
 	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
 
 	def __str__(self):
-		return str("S-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.room, self.emr))
+		return str("S-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.room, self.emr))
 
 	# Unique together
 	class Meta:

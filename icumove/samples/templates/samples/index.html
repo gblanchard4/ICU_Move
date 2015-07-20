@@ -42,122 +42,128 @@
 		</style>
 	</head>
 
- <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
-        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-        </div>
-        <div class="mdl-layout__header-row">
-          <h3>ICU Move Samples</h3>
-        </div>
-        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-        </div>
-        <div class="mdl-layout--large-screen-only mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-          <a href="/samples/" class="mdl-layout__tab is-active">Overview</a>
-          <a href="/samples/air" class="mdl-layout__tab">Air</a>
-          <a href="/samples/stool" class="mdl-layout__tab">Stool</a>
-          <a href="/samples/door" class="mdl-layout__tab">Door</a>
-          <a href="/samples/floor" class="mdl-layout__tab">Floor</a>
-        </div>
-      </header>
-      <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Material Design Lite</span>
-        <nav class="mdl-navigation">
-          <a href="/samples" class="mdl-navigation__link">Overview</a>
-          <a href="/samples/air" class="mdl-navigation__link">Air</a>
-          <a href="/samples/stool" class="mdl-navigation__link">Stool</a>
-          <a href="/samples/door" class="mdl-navigation__link">Door</a>
-          <a href="/samples/floor" class="mdl-navigation__link">Floor</a>
-        </nav>
-      </div>
-      <main class="mdl-layout__content">
-        <div class="mdl-layout__tab-panel is-active" id="overview">
-
-        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-			  <div class="mdl-card mdl-cell mdl-cell--12-col">
-			    <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
-			      <h3 class="mdl-cell mdl-cell--12-col">Sample Types</h3>
-			      <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-			        <div>
-			          <i class="fa fa-cloud fa-5x"></i>
-			        </div>
-			      </div>
-			      <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-			        <h4><a href="/samples/air">Air</a></h4>
-			        <h5>Total: {{ airs }}</h5>
-			      </div>
-			      <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-			        <div><i class="fa fa-bed fa-5x"></i></div>
-			      </div>
-			      <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-    tablet mdl-cell--3-col-phone">  
-			        <h4><a href="/samples/stool">Stool</a></h4> 
-			        <h5>Total: {{ stools}}</h5>
-			      </div>
-			      <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-			        <div><i class="fa  fa-caret-square-o-up fa-5x"></i></div>
-			      </div>
-			      <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-			        <h4><a href="/samples/door">Door</a></h4>
-			        <h5>Total: {{ doors }}</h5>
-			      </div>
-			      <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-			        <div><i class="fa  fa-caret-square-o-down fa-5x"></i></div>
-			      </div>
-			      <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-			        <h4><a href="/samples/floor">Floor</a></h4>
-			        <h5>Total: {{ floors }}</h5>
-			      </div>
-			  </div>
-			  <div class="mdl-card__actions">
-			    <h4>Total: {{ samples }}</h4>
-			  </div>
-			  </div>
-		</section>
-
-		<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-			  <div class="mdl-card mdl-cell mdl-cell--12-col">
-			    <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
-			      <h3 class="mdl-cell mdl-cell--12-col"><i class="fa fa-calendar"></i>&nbsp;Sample Dates</h3>
-			      
-			      {% for date in date_set %}
-			      <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-					<h4><a href="/samples/date/{{  date | date:'Y-m-d' }}">{{ date | date:'Y-m-d'}}</a></h4>
-			         <table class="mdl-data-table mdl-js-data-table">
-                    	<tr>
-    						<h5><td>Air</td></h5>
-    						<h5><td>Stool</td></h5>
-    						<h5><td>Door</td></h5>
-							<h5><td>Floor</td></h5>
-							<h5><td>Total</td></h5>
-						</tr><tr>
-    						<h5><td>{{ date_dictionary|get_air_day:date }}</td></h5>
-    						<h5><td>{{ date_dictionary|get_stool_day:date }}</td></h5>
-    						<h5><td>{{ date_dictionary|get_door_day:date }}</td></h5>
-							<h5><td>{{ date_dictionary|get_floor_day:date }}</td></h5>
-							<h5><td>{{ date_dictionary|get_total_day:date }}</td></h5>
-						</tr>
-                    </table>
-			      </div>
-			      {% endfor %}
-			  </div>
+	<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+			<header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+				<div class="mdl-layout--large-screen-only mdl-layout__header-row">
+				</div>
+				<div class="mdl-layout__header-row">
+					<h3>ICU Move Samples</h3>
+				</div>
+				<div class="mdl-layout--large-screen-only mdl-layout__header-row">
+				</div>
+				<div class="mdl-layout--large-screen-only mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+					<a href="/samples/" class="mdl-layout__tab is-active">Overview</a>
+					<a href="/samples/air" class="mdl-layout__tab">Air</a>
+					<a href="/samples/stool" class="mdl-layout__tab">Stool</a>
+					<a href="/samples/door" class="mdl-layout__tab">Door</a>
+					<a href="/samples/floor" class="mdl-layout__tab">Floor</a>
+				</div>
+			</header>
+			<div class="mdl-layout__drawer">
+				<span class="mdl-layout-title">Material Design Lite</span>
+				<nav class="mdl-navigation">
+					<a href="/samples" class="mdl-navigation__link">Overview</a>
+					<a href="/samples/air" class="mdl-navigation__link">Air</a>
+					<a href="/samples/stool" class="mdl-navigation__link">Stool</a>
+					<a href="/samples/door" class="mdl-navigation__link">Door</a>
+					<a href="/samples/floor" class="mdl-navigation__link">Floor</a>
+				</nav>
 			</div>
-		</section>
-
-	</div>
-        
-   
-      </main>
-    </div>
-  </body>
-
-  	<footer class="mdl-mega-footer" id="footer">
-          <div class="mdl-mega-footer--bottom-section" >
-            <div class="mdl-logo">
-             	Copyright Gene Blanchard 2015
-            </div>
-            <ul class="mdl-mega-footer--link-list">
-              <li><a href="http://www.getmdl.io/">Built with MDL</a></li>
-            </ul>
-          </div>
-	</footer>
+				<main class="mdl-layout__content">
+					<div class="mdl-layout__tab-panel is-active" id="overview">
+	
+						<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+							<div class="mdl-card mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+									<h3 class="mdl-cell mdl-cell--12-col">Sample Types</h3>
+		
+										<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+											<div>
+												<i class="fa fa-cloud fa-5x"></i>
+											</div>
+										</div>
+										<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-		cell--3-col-phone">
+											<h4><a href="/samples/air">Air</a></h4>
+											<h5>Total: {{ airs }}</h5>
+										</div>
+		
+										<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+											<div>
+												<i class="fa fa-bed fa-5x"></i>
+											</div>
+										</div>
+										<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-    tablet mdl-		cell--3-col-phone">
+											<h4><a href="/samples/stool">Stool</a></h4> 
+											<h5>Total: {{ stools}}</h5>
+										</div>
+												
+												<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+											<div>
+												<i class="fa  fa-caret-square-o-up fa-5x"></i>
+											</div>
+												</div>
+												<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-		cell--3-col-phone">
+											<h4><a href="/samples/door">Door</a></h4>
+											<h5>Total: {{ doors }}</h5>
+										</div>
+												
+												<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+											<div>
+												<i class="fa  fa-caret-square-o-down fa-5x"></i>
+											</div>
+												</div>
+												<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-		cell--3-col-phone">
+											<h4><a href="/samples/floor">Floor</a></h4>
+											<h5>Total: {{ floors }}</h5>
+										</div>
+								</div>
+								<div class="mdl-card__actions">
+									<h4>Total: {{ samples }}</h4>
+								</div>
+							</div>
+						</section>
+	
+						<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+							<div class="mdl-card mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+									<h3 class="mdl-cell mdl-cell--12-col"><i class="fa fa-calendar"></i>&nbsp;Sample Dates</h3>
+									{% for date in date_set %}
+									<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-			col-phone">
+										<h4><a href="/samples/date/{{  date | date:'Y-m-d' }}">{{ date | date:'Y-m-d'}}</a></h4>
+										<table class="mdl-data-table mdl-js-data-table">
+											<tr>
+												<h5><td>Air</td></h5>
+												<h5><td>Stool</td></h5>
+												<h5><td>Door</td></h5>
+												<h5><td>Floor</td></h5>
+												<h5><td>Total</td></h5>
+											</tr>
+											<tr>
+												<h5><td>{{ date_dictionary|get_air_day:date }}</td></h5>
+												<h5><td>{{ date_dictionary|get_stool_day:date }}</td></h5>
+												<h5><td>{{ date_dictionary|get_door_day:date }}</td></h5>
+												<h5><td>{{ date_dictionary|get_floor_day:date }}</td></h5>
+												<h5><td>{{ date_dictionary|get_total_day:date }}</td></h5>
+											</tr>
+										</table>
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+						</section>
+					</div>
+				</main>
+		</div>
+		
+		<footer class="mdl-mini-footer" id="footer">
+			<div class="mdl-mini-footer--left-section">
+				<div class="mdl-logo">Copyright Gene Blanchard 2015</div>
+					<ul class="mdl-mini-footer--link-list">
+						<li>Built with <a href="https://www.djangoproject.com/">Django</a> and <a href="http://www.getmdl.io/">MDL</a></li>
+					</ul>
+				</div>
+			</div>
+		</footer>
+	</body>
 </html>
