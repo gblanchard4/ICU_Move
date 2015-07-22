@@ -1,0 +1,56 @@
+AIR
+ILH
+A 	M 	[MMDD][TTTT] 	1A[NN]
+A 	M 	[MMDD][TTTT] 	1B[NN]
+A 	M 	[MMDD][TTTT] 	2A[NN]
+A 	M 	[MMDD][TTTT] 	2B[NN]
+A 	T 	[MMDD][TTTT] 	3A[NN]
+A 	T 	[MMDD][TTTT] 	3B[NN]
+UMC
+A 	P 	[MMDD][TTTT] 	1A[NN]
+A 	P 	[MMDD][TTTT] 	1B[NN]
+A 	P 	[MMDD][TTTT] 	2A[NN]
+A 	P 	[MMDD][TTTT] 	2B[NN]
+A 	P 	[MMDD][TTTT] 	3A[NN]
+A 	P 	[MMDD][TTTT] 	3B[NN]
+A 	P 	[MMDD][TTTT] 	4A[NN]
+A 	P 	[MMDD][TTTT] 	4B[NN]
+A 	O 	[MMDD][TTTT] 	5A[NN]
+A 	O 	[MMDD][TTTT] 	5B[NN]
+A 	O 	[MMDD][TTTT] 	6A[NN]
+A 	O 	[MMDD][TTTT] 	6B[NN]
+A 	O 	[MMDD][TTTT] 	7A[NN]
+A 	O 	[MMDD][TTTT] 	7B[NN]
+A 	O 	[MMDD][TTTT] 	8A[NN]
+A 	O 	[MMDD][TTTT] 	8B[NN]
+A 	G 	[MMDD][TTTT] 	9A[NN]
+A 	G 	[MMDD][TTTT] 	9B[NN]
+
+DOOR
+ILH
+D 	M 	[MMDD][TTTT] 	DC[NN]
+D 	T 	[MMDD][TTTT] 	DC[NN]
+UMC
+D 	P 	[MMDD][TTTT] 	DC[NN]
+D 	O 	[MMDD][TTTT] 	DC[NN]
+D 	G 	[MMDD][TTTT] 	DC[NN]
+
+FLOOR	
+ILH
+F 	M 	[MMDD][TTTT] 	FC[NN]
+F 	T 	[MMDD][TTTT] 	FC[NN]
+UMC
+F 	P 	[MMDD][TTTT]	 FC[NN]
+F 	O 	[MMDD][TTTT]	 FC[NN]
+F 	G 	[MMDD][TTTT]	 FC[NN]
+
+STOOL
+ILH
+S 	M 	[MMDD][TTTT] 	[RRRR]	{EMR}
+S 	T 	[MMDD][TTTT] 	[RRRR]	{EMR}
+UMC
+S 	P 	[MMDD][TTTT] 	[RRRR]	{EMR}
+S 	O 	[MMDD][TTTT] 	[RRRR]	{EMR}
+S 	G 	[MMDD][TTTT] 	[RRRR]	{EMR}
+
+

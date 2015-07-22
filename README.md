@@ -1,5 +1,13 @@
 # ICU Move
-django app to keep the ICU Move samples in oreder
+django app to keep the ICU Move samples in order
+
+## Installs
+```
+virtualenv env
+source env/bin/activate
+pip install django
+pip install django-grappelli
+```
 
 ## Sample Types
 * Stool
