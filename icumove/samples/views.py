@@ -16,13 +16,13 @@ def get_air_day(dictionary, key):
 def get_stool_day(dictionary, key):
     return dictionary.get(key)[1]
 
-@register.filter
-def get_door_day(dictionary, key):
-    return dictionary.get(key)[2]
+# @register.filter
+# def get_door_day(dictionary, key):
+#     return dictionary.get(key)[2]
 
-@register.filter
-def get_floor_day(dictionary, key):
-    return dictionary.get(key)[3]  
+# @register.filter
+# def get_floor_day(dictionary, key):
+#     return dictionary.get(key)[3]  
 
 @register.filter
 def get_total_day(dictionary, key):
@@ -34,30 +34,34 @@ def index(request):
 	# Counts
 	airs_count = len(Air.objects.all())
 	stools_count = len(Stool.objects.all())
-	doors_count = len(Door.objects.all())
-	floors_count = len(Floor.objects.all())
-	samples_count = airs_count + stools_count + doors_count + floors_count
+	# doors_count = len(Door.objects.all())
+	# floors_count = len(Floor.objects.all())
+	# samples_count = airs_count + stools_count + doors_count + floors_count
+	samples_count = airs_count + stools_count
 
 	# Dates
 	airs_dates = [air.sample_date for air in Air.objects.all()]
 	stools_dates = [stool.sample_date for stool in Stool.objects.all()]
-	doors_dates = [door.sample_date for door in Door.objects.all()]
-	floors_dates = [floor.sample_date for floor in Floor.objects.all()]
-	dates = (airs_dates+stools_dates+doors_dates+floors_dates)
+	#doors_dates = [door.sample_date for door in Door.objects.all()]
+	#floors_dates = [floor.sample_date for floor in Floor.objects.all()]
+	#dates = (airs_dates+stools_dates+doors_dates+floors_dates)
+	dates = (airs_dates+stools_dates)
 	date_set = sorted(set(dates))
 
 	date_dictionary = {}
 	for date in date_set:
 		air_on_day = len(Air.objects.filter(sample_date=date))
 		stool_on_day = len(Stool.objects.filter(sample_date=date))
-		door_on_day = len(Door.objects.filter(sample_date=date))
-		floor_on_day = len(Floor.objects.filter(sample_date=date))
-		total_on_day = (air_on_day+stool_on_day+door_on_day+floor_on_day)
+		#door_on_day = len(Door.objects.filter(sample_date=date))
+		#floor_on_day = len(Floor.objects.filter(sample_date=date))
+		#total_on_day = (air_on_day+stool_on_day+door_on_day+floor_on_day)
+		total_on_day = (air_on_day+stool_on_day)
 		date_dictionary[date] = (air_on_day, stool_on_day, door_on_day, floor_on_day, total_on_day)
 								 
 
 	template = 'samples/index.html'
-	context = {'samples':samples_count, 'airs':airs_count, 'stools':stools_count, 'doors':doors_count, 'floors':floors_count, 'date_set':date_set, 'date_dictionary':date_dictionary}
+	#context = {'samples':samples_count, 'airs':airs_count, 'stools':stools_count, 'doors':doors_count, 'floors':floors_count, 'date_set':date_set, 'date_dictionary':date_dictionary}
+	context = {'samples':samples_count, 'airs':airs_count, 'stools':stools_count, 'date_set':date_set, 'date_dictionary':date_dictionary}
 
 	return render(request, template, context)
 
@@ -65,11 +69,12 @@ def date_view(request, date):
 	print date
 	airs = Air.objects.filter(sample_date=date)
 	stools = Stool.objects.filter(sample_date=date)
-	doors = Door.objects.filter(sample_date=date)
-	floors = Floor.objects.filter(sample_date=date)
+	# doors = Door.objects.filter(sample_date=date)
+	# floors = Floor.objects.filter(sample_date=date)
 
 	template = 'samples/dates.html'
-	context={'date':date, 'airs':airs, 'stools':stools, 'doors':doors, 'floors':floors, }
+	#context={'date':date, 'airs':airs, 'stools':stools, 'doors':doors, 'floors':floors }
+	context={'date':date, 'airs':airs, 'stools':stools}
 
 	return render(request, template, context)
 
@@ -97,32 +102,32 @@ def stool_detail(request, uid):
 	return render(request, template, {'stool':stool})
 
 	
-def door_index(request):
-	doors_list = Door.objects.order_by('sample_date')
+# def door_index(request):
+# 	doors_list = Door.objects.order_by('sample_date')
 	
-	template = 'samples/doors.html'
-	context = {'doors_list':doors_list}
+# 	template = 'samples/doors.html'
+# 	context = {'doors_list':doors_list}
 
-	return render(request, template, context)
+# 	return render(request, template, context)
 
-def door_detail(request, uid):
-	door = get_object_or_404(Door, pk=uid)
+# def door_detail(request, uid):
+# 	door = get_object_or_404(Door, pk=uid)
 
-	template = 'samples/door_detail.html'
+# 	template = 'samples/door_detail.html'
 
-	return render(request, template, {'door':door})
+# 	return render(request, template, {'door':door})
 	
-def floor_index(request):
-	floors_list = Floor.objects.order_by('sample_date')
+# def floor_index(request):
+# 	floors_list = Floor.objects.order_by('sample_date')
 
-	template = 'samples/floors.html'
-	context = {'floors_list':floors_list}
+# 	template = 'samples/floors.html'
+# 	context = {'floors_list':floors_list}
 
-	return render(request, template, context)
+# 	return render(request, template, context)
 
-def floor_detail(request, uid):
-	floor = get_object_or_404(Floor, pk=uid)
+# def floor_detail(request, uid):
+# 	floor = get_object_or_404(Floor, pk=uid)
 
-	template = 'samples/floor_detail.html'
+# 	template = 'samples/floor_detail.html'
 
-	return render(request, template, {'floor':floor})
+# 	return render(request, template, {'floor':floor})
