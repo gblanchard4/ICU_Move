@@ -68,59 +68,6 @@ class Air(models.Model):
 		super(Air, self).save()
 	
 
-
-class Door(models.Model):
-	sample_date = models.DateField(verbose_name="Sample Date")
-	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Time of Sample")
-	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
-	day = models.CharField(max_length=2, default='00')
-	uid = models.CharField(primary_key=True, max_length=16, unique=True)
-	# Storage Location
-	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
-	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
-	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
-	
-	def __str__(self):
-		return str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
-
-	# Unique together
-	class Meta:
-		unique_together = ("sample_date", "icu", "day")
-		
-	def save(self):
-		# calculate day from DAY_1
-		self.day = "%02d" % (self.sample_date - DAY_1).days
-		# UID
-		self.uid = str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
-		super(Door, self).save()
-
-class Floor(models.Model):
-	sample_date = models.DateField(verbose_name="Sample Date")
-	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Time of Sample")
-	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
-	day = models.CharField(max_length=2, default='00')
-	uid = models.CharField(primary_key=True, max_length=16, unique=True)
-	# Storage Location
-	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
-	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
-	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
-
-	def __str__(self):
-		return str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
-
-	# Unique together
-	class Meta:
-		unique_together = ("sample_date", "icu", "day")
-
-
-
-	def save(self):
-		# calculate day from DAY_1
-		self.day = "%02d" % (self.sample_date - DAY_1).days
-		# UID
-		self.uid = str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
-		super(Floor, self).save()
-
 class Stool(models.Model):
 
 	PRESSURE_CHOICES = (
@@ -177,4 +124,103 @@ class Stool(models.Model):
 		super(Stool, self).save()
 
 
+class Environment(models.Model):
 
+	PUMP_CHOICES = (
+		('A', 'ICS Station A'), 
+		('B', 'ICS Station B'),
+		('C', 'ICS Station C'),
+		('W', 'Waiting Room')
+	)
+
+	SIDE_CHOICES = (
+		('1', 'Filter 1'), 
+		('2', 'Filter 2')
+	)
+
+
+	sample_date = models.DateField(verbose_name="Sample Date")
+	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Time of Sample")
+	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
+	pump = models.CharField(max_length=1, choices=PUMP_CHOICES, verbose_name='Pump Number')
+	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
+	
+	humidity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Percent Relative Humidity")
+	temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Temperature in °F???")
+	airflow = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Airflow")
+	airdirection = models.CharField(max_length=2)
+	
+	
+	
+
+	# Calculated
+	day = models.CharField(max_length=2, default='00')
+	uid = models.CharField(primary_key=True, max_length=16, unique=True)
+
+	
+	def __str__(self):
+		return str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.pump, self.side, self.day))
+
+	# Unique together
+	class Meta:
+		unique_together = ("sample_date", "icu", "pump", "side")
+		unique_together = ("rack", "shelf", "box")
+
+	def save(self):
+		# calculate day from DAY_1
+		self.day = "%02d" % (self.sample_date - DAY_1).days
+		# UID
+		self.uid = str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.pump, self.side, self.day))
+		super(Air, self).save()
+	
+# class Door(models.Model):
+# 	sample_date = models.DateField(verbose_name="Sample Date")
+# 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Time of Sample")
+# 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
+# 	day = models.CharField(max_length=2, default='00')
+# 	uid = models.CharField(primary_key=True, max_length=16, unique=True)
+# 	# Storage Location
+# 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
+# 	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
+# 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
+	
+# 	def __str__(self):
+# 		return str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
+
+# 	# Unique together
+# 	class Meta:
+# 		unique_together = ("sample_date", "icu", "day")
+		
+# 	def save(self):
+# 		# calculate day from DAY_1
+# 		self.day = "%02d" % (self.sample_date - DAY_1).days
+# 		# UID
+# 		self.uid = str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
+# 		super(Door, self).save()
+
+# class Floor(models.Model):
+# 	sample_date = models.DateField(verbose_name="Sample Date")
+# 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Time of Sample")
+# 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
+# 	day = models.CharField(max_length=2, default='00')
+# 	uid = models.CharField(primary_key=True, max_length=16, unique=True)
+# 	# Storage Location
+# 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
+# 	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
+# 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
+
+# 	def __str__(self):
+# 		return str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
+
+# 	# Unique together
+# 	class Meta:
+# 		unique_together = ("sample_date", "icu", "day")
+
+
+
+# 	def save(self):
+# 		# calculate day from DAY_1
+# 		self.day = "%02d" % (self.sample_date - DAY_1).days
+# 		# UID
+# 		self.uid = str("F-{}-{}-{}-{}FC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
+# 		super(Floor, self).save()
