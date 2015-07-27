@@ -37,7 +37,7 @@ class Air(models.Model):
 	)
 
 	sample_date = models.DateField(verbose_name="Sample Date")
-	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Time of Sample")
+	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 	pump = models.CharField(max_length=1, choices=PUMP_CHOICES, verbose_name='Pump Number')
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
@@ -77,7 +77,7 @@ class Stool(models.Model):
 	)
 
 	sample_date = models.DateField(verbose_name="Sample Date")
-	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Time of Sample")
+	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
 	room = models.CharField(max_length=4, verbose_name="Room Number")
 	pressure = models.CharField(max_length=3, choices=PRESSURE_CHOICES, verbose_name="Room pressure")
@@ -140,7 +140,7 @@ class Environment(models.Model):
 
 
 	sample_date = models.DateField(verbose_name="Sample Date")
-	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Time of Sample")
+	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 	pump = models.CharField(max_length=1, choices=PUMP_CHOICES, verbose_name='Pump Number')
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
@@ -172,7 +172,7 @@ class Environment(models.Model):
 	
 # class Door(models.Model):
 # 	sample_date = models.DateField(verbose_name="Sample Date")
-# 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Time of Sample")
+# 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
 # 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 # 	day = models.CharField(max_length=2, default='00')
 # 	uid = models.CharField(primary_key=True, max_length=16, unique=True)
@@ -197,7 +197,7 @@ class Environment(models.Model):
 
 # class Floor(models.Model):
 # 	sample_date = models.DateField(verbose_name="Sample Date")
-# 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Time of Sample")
+# 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
 # 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
 # 	day = models.CharField(max_length=2, default='00')
 # 	uid = models.CharField(primary_key=True, max_length=16, unique=True)
