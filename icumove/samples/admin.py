@@ -33,6 +33,20 @@ class StoolAdmin(admin.ModelAdmin):
 		})
 	)
 
+class EnvironmentAdmin(admin.ModelAdmin):
+	list_display  = ('uid' , 'sample_date', 'time', 'icu', 'pump', 'temp', 'humdity', 'airflow', 'airdirection')
+	fieldsets = (
+		('Date and Time',{
+			'fields':['sample_date','time']
+		}),
+		('Collection Location'{
+			'fields':['icu', 'pump']
+		}),
+		('Readings'{
+			'fields':['temp','humdity','airflow','airdirection']
+		})
+	)
+
 # class FloorAdmin(admin.ModelAdmin):
 	# list_display = ('uid','sample_date','time','icu','day')
 	# fieldsets = (
