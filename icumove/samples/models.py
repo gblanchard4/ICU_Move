@@ -163,13 +163,6 @@ class Environment(models.Model):
 	class Meta:
 		unique_together = ("sample_date", "icu", "pump", "side")
 
-	def save(self):
-		# calculate day from DAY_1
-		self.day = "%02d" % (self.sample_date - DAY_1).days
-		# UID
-		self.uid = str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.pump, self.side, self.day))
-		super(Air, self).save()
-	
 # class Door(models.Model):
 # 	sample_date = models.DateField(verbose_name="Sample Date")
 # 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
