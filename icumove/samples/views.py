@@ -6,7 +6,7 @@ from django.template.defaulttags import register
 
 from itertools import chain
 
-from .models import Air, Stool, Door, Floor
+from .models import Air, Stool, Environment
 
 @register.filter
 def get_air_day(dictionary, key):
