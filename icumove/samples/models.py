@@ -23,7 +23,7 @@ class Air(models.Model):
 		('A', 'ICS Station A'), 
 		('B', 'ICS Station B'),
 		('C', 'ICS Station C'),
-		('W', 'Waiting Room')
+		('E', 'Outdoor')
 	)
 
 	SIDE_CHOICES = (
@@ -130,7 +130,7 @@ class Environment(models.Model):
 		('A', 'ICS Station A'), 
 		('B', 'ICS Station B'),
 		('C', 'ICS Station C'),
-		('W', 'Waiting Room')
+		('E', 'Outdoor')
 	)
 
 	SIDE_CHOICES = (
@@ -148,9 +148,7 @@ class Environment(models.Model):
 	humidity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Percent Relative Humidity")
 	temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Temperature in °F???")
 	airflow = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Airflow")
-	airdirection = models.CharField(max_length=2)
-	
-	
+	airdirection = models.CharField(max_length=2, verbose_name="Air Direction")
 	
 
 	# Calculated
@@ -164,7 +162,6 @@ class Environment(models.Model):
 	# Unique together
 	class Meta:
 		unique_together = ("sample_date", "icu", "pump", "side")
-		unique_together = ("rack", "shelf", "box")
 
 	def save(self):
 		# calculate day from DAY_1
