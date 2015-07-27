@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Air, Stool, Floor, Door
+from .models import Air, Stool, Environment
 
 # Admin Model views
 class AirAdmin(admin.ModelAdmin):
@@ -79,6 +79,7 @@ class EnvironmentAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Air, AirAdmin)
 admin.site.register(Stool, StoolAdmin)
+admin.site.register(Environment, EnvironmentAdmin)
 # admin.site.register(Door, DoorAdmin)
 # admin.site.register(Floor, FloorAdmin)
 
