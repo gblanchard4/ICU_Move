@@ -6,15 +6,13 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Global values
 
-DAY_1 = date(2015,07,04)
+DAY_1 = date(2015,07,28)
 
 ICU_CHOICES = (
-	('M', 'ILH M-ICU'),
-	('T', 'ILH T-ICU'),
-	('P', 'UMC T/S-ICU Purple'),
-	('O', 'UMC M-ICU Orange'), 
-	('G', 'UMC Control ICU Green')
-)
+	('O', 'UMC Orange Tower-1 M-ICU'), 
+	('P', 'UMC Purple Tower-2 T-ICU S-ICU'),
+	('G', 'UMC Green  Tower-3 Control ICU')
+)	
 
 # Air sample model
 class Air(models.Model):
@@ -70,6 +68,14 @@ class Air(models.Model):
 
 class Stool(models.Model):
 
+	STOOL_ICU_CHOICES = (
+		('M', 'ILH M-ICU'),
+		('T', 'ILH T-ICU'),
+		('O', 'UMC Orange Tower-1 M-ICU'), 
+		('P', 'UMC Purple Tower-2 T-ICU S-ICU'),
+		('G', 'UMC Green  Tower-3 Control ICU')
+	)	
+
 	PRESSURE_CHOICES = (
 		('NAN', 'Not Pressured'),
 		('NEG', 'Negative Pressure'),
@@ -78,7 +84,7 @@ class Stool(models.Model):
 
 	sample_date = models.DateField(verbose_name="Sample Date")
 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
-	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
+	icu = models.CharField(max_length=1, choices=STOOL_ICU_CHOICES, verbose_name="ICU Location")
 	room = models.CharField(max_length=4, verbose_name="Room Number")
 	pressure = models.CharField(max_length=3, choices=PRESSURE_CHOICES, verbose_name="Room pressure")
 	emr = models.CharField(max_length=10, verbose_name="Epic Medical Record Number")
@@ -148,8 +154,6 @@ class Environment(models.Model):
 	humidity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Percent Relative Humidity")
 	temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Temperature in F???")
 	airflow = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Airflow")
-	airdirection = models.CharField(max_length=2, verbose_name="Air Direction")
-	
 
 	# Calculated
 	day = models.CharField(max_length=2, default='00')
@@ -157,11 +161,19 @@ class Environment(models.Model):
 
 	
 	def __str__(self):
-		return str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.pump, self.side, self.day))
+		return str("E-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.temp, self.humidity, self.airflow))
 
 	# Unique together
 	class Meta:
 		unique_together = ("sample_date", "icu", "pump", "side")
+
+	def save(self):
+		# calculate day from DAY_1
+		self.day = "%02d" % (self.sample_date - DAY_1).days
+		# UID
+		self.uid = str("E-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.temp, self.humidity, self.airflow))
+		super(Environment, self).save()
+
 
 # class Door(models.Model):
 # 	sample_date = models.DateField(verbose_name="Sample Date")
