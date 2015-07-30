@@ -210,6 +210,10 @@ class Toilet(models.Model):
 	# Sample Location
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 	room = models.CharField(max_length=4, verbose_name="Room Number")
+	# Storage Location
+	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
+	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
+	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
 	# Calculated
 	day = models.CharField(max_length=2, default='00')
 	uid = models.CharField(primary_key=True, max_length=16, unique=True)
