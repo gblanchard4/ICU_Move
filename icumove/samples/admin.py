@@ -12,7 +12,10 @@ class AirAdmin(admin.ModelAdmin):
 			'fields':['icu','pump','side']
 		}),
 		('Storage Location',{
-			'fields':['tub','shelf','rack','box']
+			'fields':['shelf','rack','box']
+		}),
+		('Notes',{
+			'fields':['notes']
 		})
 	)
 
@@ -30,6 +33,9 @@ class StoolAdmin(admin.ModelAdmin):
 		}),
 		('Storage Location',{
 			'fields':['shelf','rack','box']
+		}),
+		('Notes',{
+			'fields':['notes']
 		})
 	)
 
@@ -44,6 +50,9 @@ class EnvironmentAdmin(admin.ModelAdmin):
 		}),
 		('Readings',{
 			'fields':['temp','humidity','airflow']
+		}),
+		('Notes',{
+			'fields':['notes']
 		})
 	)
 
