@@ -98,25 +98,16 @@
 											<h5>Total: {{ stools}}</h5>
 										</div>
 												
-												<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+										<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
 											<div>
-												<i class="fa  fa-caret-square-o-up fa-5x"></i>
+												<i class="fa  fa-globe fa-5x"></i>
 											</div>
-												</div>
-												<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-		cell--3-col-phone">
-											<h4><a href="/samples/door">Door</a></h4>
-											<h5>Total: {{ doors }}</h5>
+										</div>
+										<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-		cell--3-col-phone">
+											<h4><a href="/samples/environment">Environment</a></h4>
+											<h5>Total: {{ enviros }}</h5>
 										</div>
 												
-												<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-											<div>
-												<i class="fa  fa-caret-square-o-down fa-5x"></i>
-											</div>
-												</div>
-												<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-		cell--3-col-phone">
-											<h4><a href="/samples/floor">Floor</a></h4>
-											<h5>Total: {{ floors }}</h5>
-										</div>
 								</div>
 								<div class="mdl-card__actions">
 									<h4>Total: {{ samples }}</h4>
@@ -135,15 +126,13 @@
 											<tr>
 												<h5><td>Air</td></h5>
 												<h5><td>Stool</td></h5>
-												<h5><td>Door</td></h5>
-												<h5><td>Floor</td></h5>
+												<h5><td>Environment</td></h5>
 												<h5><td>Total</td></h5>
 											</tr>
 											<tr>
 												<h5><td>{{ date_dictionary|get_air_day:date }}</td></h5>
 												<h5><td>{{ date_dictionary|get_stool_day:date }}</td></h5>
-												<h5><td>{{ date_dictionary|get_door_day:date }}</td></h5>
-												<h5><td>{{ date_dictionary|get_floor_day:date }}</td></h5>
+												<h5><td>{{ date_dictionary|get_enviro_day:date }}</td></h5>
 												<h5><td>{{ date_dictionary|get_total_day:date }}</td></h5>
 											</tr>
 										</table>
