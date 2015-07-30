@@ -228,6 +228,16 @@ class Toilet(models.Model):
 	class Meta:
 		unique_together = ("icu", "room", "sample_date")
 
+	def clean(self):
+		# Validate unique Freezer/Shelf/Rack/Box
+
+		# Validate Room numbers for POG
+		if not self.icu == self.room[1]:
+			raise ValidationError('Room %s can not be in tower %s' % (self.room, self.icu))
+		valid_room_enders = ['15','16','17','18','19','20','32','33','34','35','36','37','41','42','43','44','45','46','61','62','63','64','65','66']
+		if not self.room[2::] in valid_room_enders:
+			raise ValidationError('Room %s is not a valid room, hint check %s' % (self.room, self.room[2::]))
+
 	def save(self):
 		# calculate day from DAY_1
 		self.day = "%02d" % (self.sample_date - DAY_1).days
