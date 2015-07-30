@@ -16,6 +16,14 @@ def get_air_day(dictionary, key):
 def get_stool_day(dictionary, key):
     return dictionary.get(key)[1]
 
+@register.filter
+def get_enviro_day(dictionary, key):
+    return dictionary.get(key)[2]  
+
+@register.filter
+def get_total_day(dictionary, key):
+    return dictionary.get(key)[3]  
+
 # @register.filter
 # def get_door_day(dictionary, key):
 #     return dictionary.get(key)[2]
@@ -24,9 +32,9 @@ def get_stool_day(dictionary, key):
 # def get_floor_day(dictionary, key):
 #     return dictionary.get(key)[3]  
 
-@register.filter
-def get_total_day(dictionary, key):
-    return dictionary.get(key)[4]  
+# @register.filter
+# def get_total_day(dictionary, key):
+    # return dictionary.get(key)[4]  
 
 # All the samples together
 def index(request):
@@ -34,34 +42,38 @@ def index(request):
 	# Counts
 	airs_count = len(Air.objects.all())
 	stools_count = len(Stool.objects.all())
+	enviro_count = len(Environment.objects.all())
 	# doors_count = len(Door.objects.all())
 	# floors_count = len(Floor.objects.all())
 	# samples_count = airs_count + stools_count + doors_count + floors_count
-	samples_count = airs_count + stools_count
+	samples_count = airs_count + stools_count + enviro_count
 
 	# Dates
 	airs_dates = [air.sample_date for air in Air.objects.all()]
 	stools_dates = [stool.sample_date for stool in Stool.objects.all()]
+	enviro_dates = [enviro.sample_date for enviro in Environment.objects.all()]
 	#doors_dates = [door.sample_date for door in Door.objects.all()]
 	#floors_dates = [floor.sample_date for floor in Floor.objects.all()]
 	#dates = (airs_dates+stools_dates+doors_dates+floors_dates)
-	dates = (airs_dates+stools_dates)
+	dates = (airs_dates+stools_dates+enviro_dates)
 	date_set = sorted(set(dates))
 
 	date_dictionary = {}
 	for date in date_set:
 		air_on_day = len(Air.objects.filter(sample_date=date))
 		stool_on_day = len(Stool.objects.filter(sample_date=date))
+		enviro_on_day = len(Environment.objects.filter(sample_date=date))
 		#door_on_day = len(Door.objects.filter(sample_date=date))
 		#floor_on_day = len(Floor.objects.filter(sample_date=date))
 		#total_on_day = (air_on_day+stool_on_day+door_on_day+floor_on_day)
-		total_on_day = (air_on_day+stool_on_day)
-		date_dictionary[date] = (air_on_day, stool_on_day, door_on_day, floor_on_day, total_on_day)
+		total_on_day = (air_on_day+stool_on_day+enviro_on_day)
+		#date_dictionary[date] = (air_on_day, stool_on_day, door_on_day, floor_on_day, total_on_day)
+		date_dictionary[date] = (air_on_day, stool_on_day, enviro_on_day, total_on_day)
 								 
 
 	template = 'samples/index.html'
 	#context = {'samples':samples_count, 'airs':airs_count, 'stools':stools_count, 'doors':doors_count, 'floors':floors_count, 'date_set':date_set, 'date_dictionary':date_dictionary}
-	context = {'samples':samples_count, 'airs':airs_count, 'stools':stools_count, 'date_set':date_set, 'date_dictionary':date_dictionary}
+	context = {'samples':samples_count, 'airs':airs_count, 'stools':stools_count, 'enviros':enviro_count, 'date_set':date_set, 'date_dictionary':date_dictionary}
 
 	return render(request, template, context)
 
