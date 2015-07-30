@@ -9,7 +9,7 @@ class AirAdmin(admin.ModelAdmin):
 			'fields':['sample_date','time']
 		}),
 		('Collection Location',{
-			'fields':['icu','pump','side']
+			'fields':['color','icu','pump','side']
 		}),
 		('Storage Location',{
 			'fields':['shelf','rack','box']
@@ -26,7 +26,7 @@ class StoolAdmin(admin.ModelAdmin):
 			'fields':['sample_date','time']
 		}),
 		('Collection Location',{
-			'fields':['icu',('room','pressure')]
+			'fields':['icu','room']
 		}),
 		('Patient',{
 			'fields':['emr']
@@ -40,7 +40,7 @@ class StoolAdmin(admin.ModelAdmin):
 	)
 
 class EnvironmentAdmin(admin.ModelAdmin):
-	list_display  = ('uid' , 'sample_date', 'time', 'icu', 'pump', 'temp', 'humidity', 'airflow')
+	list_display  = ('uid' , 'sample_date', 'time', 'icu', 'pump', 'temp', 'humidity', 'pressure')
 	fieldsets = (
 		('Date and Time',{
 			'fields':['sample_date','time']
@@ -49,7 +49,7 @@ class EnvironmentAdmin(admin.ModelAdmin):
 			'fields':['icu', 'pump']
 		}),
 		('Readings',{
-			'fields':['temp','humidity','airflow']
+			'fields':['temp','humidity','pressure']
 		}),
 		('Notes',{
 			'fields':['notes']
