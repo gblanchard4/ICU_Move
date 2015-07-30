@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Air, Stool, Environment
+from .models import Air, Stool, Environment, Toilet
 
 # Admin Model views
 class AirAdmin(admin.ModelAdmin):
@@ -55,6 +55,24 @@ class EnvironmentAdmin(admin.ModelAdmin):
 			'fields':['notes']
 		})
 	)
+
+class ToiletAdmin(admin.ModelAdmin):
+	list_display = ('uid', 'sample_date', 'icu', 'room')
+	fieldsets = (
+		('Date',{
+			'fields':['sample_date']
+		}),
+		('Collection Location',{
+			'fields':['icu', 'room']
+		}),
+		('Storage Location',{
+			'fields':['shelf','rack','box']
+		}),
+		('Notes',{
+			'fields':['notes']
+		})
+	)
+
 
 # class FloorAdmin(admin.ModelAdmin):
 	# list_display = ('uid','sample_date','time','icu','day')
