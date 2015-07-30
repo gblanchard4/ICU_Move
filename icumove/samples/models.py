@@ -5,17 +5,22 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # Global values
-
 DAY_1 = date(2015,07,28)
-
-ICU_CHOICES = (
-	('O', 'UMC Orange Tower-1 M-ICU'), 
-	('P', 'UMC Purple Tower-2 T-ICU S-ICU'),
-	('G', 'UMC Green  Tower-3 Control ICU')
-)	
 
 # Air sample model
 class Air(models.Model):
+
+	ICU_CHOICES = (
+		('1', 'UMC Tower-1'), 
+		('2', 'UMC Tower-2'),
+		('3', 'UMC Tower-3')
+	)
+
+	COLOR_CHOICES = (
+		('R', 'Red'),
+		('G', 'Green'),
+		('B', 'Blue')
+	)	
 
 	PUMP_CHOICES = (
 		('A', 'ICS Station A'), 
@@ -29,35 +34,41 @@ class Air(models.Model):
 		('2', 'Filter 2')
 	)
 
-	TUB_CHOICES = (
-		('1', 'Tub 1'),
-		('2', 'Tub 2')
-	)
-
+	# DateTime
 	sample_date = models.DateField(verbose_name="Sample Date")
 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
+	# Sample Information
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
+	color = models.CharField(max_length=1, choices=COLOR_CHOICES, verbose_name='Tape Color')
 	pump = models.CharField(max_length=1, choices=PUMP_CHOICES, verbose_name='Pump Number')
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
 	# Storage Location
-	tub = models.CharField(max_length=1, choices=TUB_CHOICES, verbose_name='Storage Tub')
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
 	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
-
 	# Calculated
 	day = models.CharField(max_length=2, default='00')
 	uid = models.CharField(primary_key=True, max_length=16, unique=True)
+	# Notes
+	notes = models.TextField(verbose_name="Notes", blank=True)
 
 	
 	def __str__(self):
-		return str("A-{}-{}-{}-{}{}{}{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.pump, self.side, self.day))
+		return str("A-{}-{}{}-T{}-{}".format(self.color, self.pump, self.side, self.tower, self.date.strftime('%m%d%y')))
 
 	# Unique together
 	class Meta:
 		unique_together = ("sample_date", "icu", "pump", "side")
 		unique_together = ("rack", "shelf", "box")
 
+	def clean(self):
+		# Validate unique Freezer/Shelf/Rack/Box
+		#Ehhh
+		# Validate Tower to Color
+		tower_to_color_dict = {'1':'R','2':'G','3':'B'}
+		if not tower_to_color_dict[self.tower] == self.color:
+			raise ValidationError("{} is not the right color for tower {}".format(self.color, self.tower))
+		
 	def save(self):
 		# calculate day from DAY_1
 		self.day = "%02d" % (self.sample_date - DAY_1).days
@@ -68,12 +79,13 @@ class Air(models.Model):
 
 class Stool(models.Model):
 
-	STOOL_ICU_CHOICES = (
+
+	ICU_CHOICES = (
 		('M', 'ILH M-ICU'),
 		('T', 'ILH T-ICU'),
-		('O', 'UMC Orange Tower-1 M-ICU'), 
-		('P', 'UMC Purple Tower-2 T-ICU S-ICU'),
-		('G', 'UMC Green  Tower-3 Control ICU')
+		('1', 'UMC Tower-1'), 
+		('2', 'UMC Tower-2'),
+		('3', 'UMC Tower-3')
 	)	
 
 	PRESSURE_CHOICES = (
@@ -82,18 +94,23 @@ class Stool(models.Model):
 		('POS', 'Positive Pressure')
 	)
 
+	#DateTime
 	sample_date = models.DateField(verbose_name="Sample Date")
 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
-	icu = models.CharField(max_length=1, choices=STOOL_ICU_CHOICES, verbose_name="ICU Location")
+	# Sample Information
+	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name="ICU Location")
 	room = models.CharField(max_length=4, verbose_name="Room Number")
 	pressure = models.CharField(max_length=3, choices=PRESSURE_CHOICES, verbose_name="Room pressure")
 	emr = models.CharField(max_length=10, verbose_name="Epic Medical Record Number")
-	day = models.CharField(max_length=2, default='00')
-	uid = models.CharField(primary_key=True, max_length=27, unique=True)
 	# Storage Location
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
 	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
+	# Calculated
+	day = models.CharField(max_length=2, default='00')
+	uid = models.CharField(primary_key=True, max_length=27, unique=True)
+	# Notes
+	notes = models.TextField(verbose_name="Notes", blank=True)
 
 	def __str__(self):
 		return str("S-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.room, self.emr))
@@ -132,6 +149,12 @@ class Stool(models.Model):
 
 class Environment(models.Model):
 
+	ICU_CHOICES = (
+		('1', 'UMC Tower-1'), 
+		('2', 'UMC Tower-2'),
+		('3', 'UMC Tower-3')
+	)
+
 	PUMP_CHOICES = (
 		('A', 'ICS Station A'), 
 		('B', 'ICS Station B'),
@@ -144,24 +167,25 @@ class Environment(models.Model):
 		('2', 'Filter 2')
 	)
 
-
+	# DateTime
 	sample_date = models.DateField(verbose_name="Sample Date")
 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
+	# Sample Information
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 	pump = models.CharField(max_length=1, choices=PUMP_CHOICES, verbose_name='Pump Number')
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
-	
 	humidity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Percent Relative Humidity")
 	temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Temperature in F???")
 	airflow = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Airflow")
-
 	# Calculated
 	day = models.CharField(max_length=2, default='00')
 	uid = models.CharField(primary_key=True, max_length=16, unique=True)
+	# Notes
+	notes = models.TextField(verbose_name="Notes", blank=True)
 
 	
 	def __str__(self):
-		return str("E-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.temp, self.humidity, self.airflow))
+		return str("E-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d%y'), self.time.strftime('%H'), self.temp, self.humidity, self.airflow))
 
 	# Unique together
 	class Meta:
@@ -171,7 +195,7 @@ class Environment(models.Model):
 		# calculate day from DAY_1
 		self.day = "%02d" % (self.sample_date - DAY_1).days
 		# UID
-		self.uid = str("E-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time.strftime('%H'), self.temp, self.humidity, self.airflow))
+		self.uid = str("E-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d%y'), self.time.strftime('%H'), self.temp, self.humidity, self.airflow))
 		super(Environment, self).save()
 
 
