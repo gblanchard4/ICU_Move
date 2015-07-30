@@ -6,63 +6,40 @@ django app to keep the ICU Move samples in order
 virtualenv env
 source env/bin/activate
 pip install django
-pip install django-grappelli
+pip install ipython
 ```
 
 ## Sample Types
 * Stool
 * Air
-* Floor
-* Door
+* Environment
 
 ## Sample Nomeclature
 Format: {Type}-{ICU}-{Date}-{UID}
 
 ### Type
 * A = Air
-* D = Door
-* F = Floor
 * S = Stool
+* E = Environment
 
-### ICU
-* M = ILH M-ICU (1&2)
-* T = ILH T-ICU
-* P = UMC T/S-ICU
-* O = UMC M-ICU 
-* G = UMC Control ICU
-
-### Date
-* MMDD
-
-###UID
-Specialized for each sampletype
+### ICUs
+* M -> ILH M-ICU
+* T -> ILH T-ICU
+* O -> UMC Orange Tower-1 M-ICU
+* P -> UMC Purple Tower-2 T-ICU S-ICU
+* G -> UMC Green  Tower-3 Control ICU
 
 #### Air
-* { [Tower] [Pump] [Side] [Day] }
-  * Tower
-    * M, T, P ,O, G 
-  * Pump
-    * 1-9
-  * Side
-    * A = Inside reception
-    * B = Outside reception
-  * Day
-    * Correspond to day of study i.e. Aug 1 = 01
-
-#### Door
-* { [Tower] DC [Day] }
-  *Tower 
-    * M, T, P ,O, G
-  * DC
-    * “Door Combined”
-  * Day
-    * Correspond to day of study 
-    
-#### Floor
-* { [Tower] FC [Day] }
-  * Tower 
-    * M, T, P ,O, G
-  * FC
-    * “Floor Combined”
-  * Day
-    * Correspond
+   sample_date
+time
+icu
+pump
+side
+tub
+rack
+shelf
+box
+day
+uid
+#### Stool
+#### Environment

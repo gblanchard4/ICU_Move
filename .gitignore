@@ -2,6 +2,9 @@
 icumove/db.sqlite3
 .nfs*
 
+# Wunderground
+wunderground.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
