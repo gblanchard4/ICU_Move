@@ -107,6 +107,7 @@ class ToiletAdmin(admin.ModelAdmin):
 admin.site.register(Air, AirAdmin)
 admin.site.register(Stool, StoolAdmin)
 admin.site.register(Environment, EnvironmentAdmin)
+admin.site.register(Toilet, ToiletAdmin)
 # admin.site.register(Door, DoorAdmin)
 # admin.site.register(Floor, FloorAdmin)
 
