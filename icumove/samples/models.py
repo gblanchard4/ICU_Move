@@ -199,6 +199,39 @@ class Environment(models.Model):
 		self.uid = str("E-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d%y'), "%02d" % self.time, self.temp, self.humidity, self.pressure))
 		super(Environment, self).save()
 
+class Toilet(models.Model):
+
+	ICU_CHOICES = (
+		('1', 'UMC Tower-1'), 
+		('2', 'UMC Tower-2'),
+		('3', 'UMC Tower-3')
+	)
+
+	# DateTime
+	sample_date = models.DateField(verbose_name="Sample Date")
+	# Sample Location
+	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
+	room = models.CharField(max_length=4, verbose_name="Room Number")
+	# Calculated
+	day = models.CharField(max_length=2, default='00')
+	uid = models.CharField(primary_key=True, max_length=16, unique=True)
+	# Notes
+	notes = models.TextField(verbose_name="Notes", blank=True)
+
+	
+	def __str__(self):
+		return str("T-T{}-{}-{}".format(self.icu, self.room, self.sample_date.strftime('%m%d%y')))
+
+	# Unique together
+	class Meta:
+		unique_together = ("icu", "room", "sample_date")
+
+	def save(self):
+		# calculate day from DAY_1
+		self.day = "%02d" % (self.sample_date - DAY_1).days
+		# UID
+		self.uid = str("T-T{}-{}-{}".format(self.icu, self.room, self.sample_date.strftime('%m%d%y')))
+		super(Toilet, self).save()
 
 # class Door(models.Model):
 # 	sample_date = models.DateField(verbose_name="Sample Date")
