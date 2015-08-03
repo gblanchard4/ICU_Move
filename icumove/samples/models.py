@@ -135,7 +135,7 @@ class Stool(models.Model):
 		# calculate day from DAY_1
 		self.day = "%02d" % (self.sample_date - DAY_1).days
 		# UID
-		self.uid = str("S-{}-{}-{}".format(self.stool_number, self.room, self.sample_date.strftime('%m%d'))
+		self.uid = str("S-{}-{}-{}".format(self.stool_number, self.room, self.sample_date.strftime('%m%d')))
 		# Pressure
 		neg_pressure_rooms = ['4115','4116','4117','4141','4142','4143','4215','4241','4315','4341']
 		if self.room in neg_pressure_rooms:
