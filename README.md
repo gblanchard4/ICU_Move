@@ -29,17 +29,8 @@ Format: {Type}-{ICU}-{Date}-{UID}
 * P -> UMC Purple Tower-2 T-ICU S-ICU
 * G -> UMC Green  Tower-3 Control ICU
 
+### UIDs
 #### Air
-   sample_date
-time
-icu
-pump
-side
-tub
-rack
-shelf
-box
-day
-uid
+A-{tape color}-{ICS}{Side}-{MMDDYY}
 #### Stool
-#### Environment
+S-{number}-{room}-{MMDDYY}

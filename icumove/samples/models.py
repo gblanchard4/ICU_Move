@@ -147,24 +147,6 @@ class Stool(models.Model):
 
 class Environment(models.Model):
 
-	ICU_CHOICES = (
-		('1', 'UMC Tower-1'),
-		('2', 'UMC Tower-2'),
-		('3', 'UMC Tower-3')
-	)
-
-	PUMP_CHOICES = (
-		('A', 'ICS Station A'),
-		('B', 'ICS Station B'),
-		('C', 'ICS Station C'),
-		('E', 'Outdoor')
-	)
-
-	SIDE_CHOICES = (
-		('1', 'Filter 1'),
-		('2', 'Filter 2')
-	)
-
 	# DateTime
 	sample_date = models.DateField(verbose_name="Sample Date")
 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
@@ -211,10 +193,6 @@ class Environment(models.Model):
 
 	def __str__(self):
 		return str("E-{}".format(self.sample_date.strftime('%m%d%y')))
-
-	# Unique together
-	class Meta:
-		unique_together = ("sample_date")
 
 	def save(self):
 		# calculate day from DAY_1

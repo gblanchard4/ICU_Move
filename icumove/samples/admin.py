@@ -40,10 +40,10 @@ class StoolAdmin(admin.ModelAdmin):
 	)
 
 class EnvironmentAdmin(admin.ModelAdmin):
-	list_display  =('sample_date')
+	list_display  =('sample_date', 'time')
 	fieldsets = (
 		('Date',{
-			'fields':['sample_date']
+			'fields':['sample_date', 'time']
 		}),
 		('Tower 1',{
 			'fields':['tower1_E_temp','tower1_E_humi','tower1_E_pres','tower1_A_temp','tower1_A_humi','tower1_A_pres','tower1_B_temp','tower1_B_humi','tower1_B_pres','tower1_C_temp','tower1_C_humi','tower1_C_pres']
