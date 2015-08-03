@@ -11,7 +11,7 @@ DAY_1 = date(2015,07,28)
 class Air(models.Model):
 
 	ICU_CHOICES = (
-		('1', 'UMC Tower-1'), 
+		('1', 'UMC Tower-1'),
 		('2', 'UMC Tower-2'),
 		('3', 'UMC Tower-3')
 	)
@@ -19,18 +19,18 @@ class Air(models.Model):
 	COLOR_CHOICES = (
 		('R', 'Red'),
 		('G', 'Green'),
-		('B', 'Blue')
-	)	
+		('P', 'Purple')
+	)
 
 	PUMP_CHOICES = (
-		('A', 'ICS Station A'), 
+		('A', 'ICS Station A'),
 		('B', 'ICS Station B'),
 		('C', 'ICS Station C'),
 		('E', 'Outdoor')
 	)
 
 	SIDE_CHOICES = (
-		('1', 'Filter 1'), 
+		('1', 'Filter 1'),
 		('2', 'Filter 2')
 	)
 
@@ -51,9 +51,9 @@ class Air(models.Model):
 	# Notes
 	notes = models.TextField(verbose_name="Notes", blank=True)
 
-	
+
 	def __str__(self):
-		return str("A-{}-{}{}-T{}-{}".format(self.color, self.pump, self.side, self.icu, self.sample_date.strftime('%m%d%y')))
+		return str("A-{}-{}{}-{}".format(self.color, self.pump, self.side, self.sample_date.strftime('%m%d%y')))
 
 	# Unique together
 	class Meta:
@@ -64,17 +64,17 @@ class Air(models.Model):
 		# Validate unique Freezer/Shelf/Rack/Box
 		#Ehhh
 		# Validate Tower to Color
-		tower_to_color_dict = {'1':'R','2':'G','3':'B'}
+		tower_to_color_dict = {'1':'R','2':'G','3':'P'}
 		if not tower_to_color_dict[self.icu] == self.color:
 			raise ValidationError("{} is not the right color for tower {}".format(self.color, self.icu))
-		
+
 	def save(self):
 		# calculate day from DAY_1
 		self.day = "%02d" % (self.sample_date - DAY_1).days
 		# UID
-		self.uid = str("A-{}-{}{}-T{}-{}".format(self.color, self.pump, self.side, self.icu, self.sample_date.strftime('%m%d%y')))
+		self.uid = str("A-{}-{}{}-{}".format(self.color, self.pump, self.side, self.sample_date.strftime('%m%d%y')))
 		super(Air, self).save()
-	
+
 
 class Stool(models.Model):
 
@@ -82,10 +82,10 @@ class Stool(models.Model):
 	ICU_CHOICES = (
 		('M', 'ILH M-ICU'),
 		('T', 'ILH T-ICU'),
-		('1', 'UMC Tower-1'), 
+		('1', 'UMC Tower-1'),
 		('2', 'UMC Tower-2'),
 		('3', 'UMC Tower-3')
-	)	
+	)
 
 	PRESSURE_CHOICES = (
 		('NAN', 'Not Pressured'),
@@ -101,6 +101,7 @@ class Stool(models.Model):
 	room = models.CharField(max_length=4, verbose_name="Room Number")
 	# Metadata
 	emr = models.CharField(max_length=10, verbose_name="Epic Medical Record Number")
+	stool_number = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9)], verbose_name="The number stool collected"))
 	# Storage Location
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
@@ -112,11 +113,12 @@ class Stool(models.Model):
 	notes = models.TextField(verbose_name="Notes", blank=True)
 
 	def __str__(self):
-		return str("S-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), "%02d" %  self.time, self.room, self.emr))
+		return str("S-{}-{}-{}".format(self.stool_number, self.room, self.sample_date.strftime('%m%d'))
 
 	# Unique together
 	class Meta:
 		unique_together = ("sample_date", "time", "icu", "room", "emr")
+		unique_together = ("stool_number", "room", "sample_date")
 
 	# Clean Overide for Validation
 	def clean(self):
@@ -133,7 +135,7 @@ class Stool(models.Model):
 		# calculate day from DAY_1
 		self.day = "%02d" % (self.sample_date - DAY_1).days
 		# UID
-		self.uid = str("S-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d'), "%02d" % self.time, self.room, self.emr))
+		self.uid = str("S-{}-{}-{}".format(self.stool_number, self.room, self.sample_date.strftime('%m%d'))
 		# Pressure
 		neg_pressure_rooms = ['4115','4116','4117','4141','4142','4143','4215','4241','4315','4341']
 		if self.room in neg_pressure_rooms:
@@ -146,20 +148,20 @@ class Stool(models.Model):
 class Environment(models.Model):
 
 	ICU_CHOICES = (
-		('1', 'UMC Tower-1'), 
+		('1', 'UMC Tower-1'),
 		('2', 'UMC Tower-2'),
 		('3', 'UMC Tower-3')
 	)
 
 	PUMP_CHOICES = (
-		('A', 'ICS Station A'), 
+		('A', 'ICS Station A'),
 		('B', 'ICS Station B'),
 		('C', 'ICS Station C'),
 		('E', 'Outdoor')
 	)
 
 	SIDE_CHOICES = (
-		('1', 'Filter 1'), 
+		('1', 'Filter 1'),
 		('2', 'Filter 2')
 	)
 
@@ -180,7 +182,7 @@ class Environment(models.Model):
 	# Notes
 	notes = models.TextField(verbose_name="Notes", blank=True)
 
-	
+
 	def __str__(self):
 		return str("E-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d%y'), "%02d" % self.time, self.temp, self.humidity, self.pressure))
 
@@ -198,7 +200,7 @@ class Environment(models.Model):
 class Toilet(models.Model):
 
 	ICU_CHOICES = (
-		('1', 'UMC Tower-1'), 
+		('1', 'UMC Tower-1'),
 		('2', 'UMC Tower-2'),
 		('3', 'UMC Tower-3')
 	)
@@ -217,9 +219,9 @@ class Toilet(models.Model):
 	# Notes
 	notes = models.TextField(verbose_name="Notes", blank=True)
 
-	
+
 	def __str__(self):
-		return str("T-T{}-{}-{}".format(self.icu, self.room, self.sample_date.strftime('%m%d%y')))
+		return str("T-{}-{}".format(self.room, self.sample_date.strftime('%m%d%y')))
 
 	# Unique together
 	class Meta:
@@ -239,7 +241,7 @@ class Toilet(models.Model):
 		# calculate day from DAY_1
 		self.day = "%02d" % (self.sample_date - DAY_1).days
 		# UID
-		self.uid = str("T-T{}-{}-{}".format(self.icu, self.room, self.sample_date.strftime('%m%d%y')))
+		self.uid = str("T-{}-{}".format(self.icu, self.sample_date.strftime('%m%d%y')))
 		super(Toilet, self).save()
 
 # class Door(models.Model):
@@ -252,14 +254,14 @@ class Toilet(models.Model):
 # 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
 # 	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
 # 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
-	
+
 # 	def __str__(self):
 # 		return str("D-{}-{}-{}-{}DC{}".format(self.icu, self.sample_date.strftime('%m%d'), self.time, self.icu, self.day))
 
 # 	# Unique together
 # 	class Meta:
 # 		unique_together = ("sample_date", "icu", "day")
-		
+
 # 	def save(self):
 # 		# calculate day from DAY_1
 # 		self.day = "%02d" % (self.sample_date - DAY_1).days

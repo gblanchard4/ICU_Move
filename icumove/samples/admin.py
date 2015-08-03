@@ -29,7 +29,7 @@ class StoolAdmin(admin.ModelAdmin):
 			'fields':['icu','room']
 		}),
 		('Patient',{
-			'fields':['emr']
+			'fields':['stool_number','emr']
 		}),
 		('Storage Location',{
 			'fields':['rack','box']
@@ -110,4 +110,3 @@ admin.site.register(Environment, EnvironmentAdmin)
 admin.site.register(Toilet, ToiletAdmin)
 # admin.site.register(Door, DoorAdmin)
 # admin.site.register(Floor, FloorAdmin)
-
