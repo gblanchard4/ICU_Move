@@ -178,12 +178,12 @@ class Environment(models.Model):
 	tower2_C_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Percent Relative Humidity", blank=True)
 	tower2_C_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="Barometric Pressure", blank=True)
 	# Tower-3
-	tower2_A_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], verbose_name="Temperature in C", blank=True)
-	tower2_A_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Percent Relative Humidity", blank=True)
-	tower2_A_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="Barometric Pressure", blank=True)
-	tower2_B_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], verbose_name="Temperature in C", blank=True)
-	tower2_B_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Percent Relative Humidity", blank=True)
-	tower2_B_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="Barometric Pressure", blank=True)
+	tower3_A_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], verbose_name="Temperature in C", blank=True)
+	tower3_A_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Percent Relative Humidity", blank=True)
+	tower3_A_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="Barometric Pressure", blank=True)
+	tower3_B_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], verbose_name="Temperature in C", blank=True)
+	tower3_B_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Percent Relative Humidity", blank=True)
+	tower3_B_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="Barometric Pressure", blank=True)
 
 	# Calculated
 	day = models.CharField(max_length=2, default='00')
