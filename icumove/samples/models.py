@@ -210,11 +210,11 @@ class Environment(models.Model):
 
 
 	def __str__(self):
-		return str("E-{}-{}-{}-{}-{}".format(self.icu, self.sample_date.strftime('%m%d%y'), "%02d" % self.time, self.temp, self.humidity, self.pressure))
+		return str("E-{}".format(self.sample_date.strftime('%m%d%y')))
 
 	# Unique together
 	class Meta:
-		unique_together = ("sample_date", "icu", "pump", "side")
+		unique_together = ("sample_date")
 
 	def save(self):
 		# calculate day from DAY_1
