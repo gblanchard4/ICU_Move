@@ -117,8 +117,7 @@ class Stool(models.Model):
 
 	# Unique together
 	class Meta:
-		unique_together = ("sample_date", "time", "icu", "room", "emr")
-		unique_together = ("stool_number", "room", "sample_date")
+		unique_together = ("sample_date", "time", "icu", "room", "emr", "stool_number"),
 
 	# Clean Overide for Validation
 	def clean(self):
