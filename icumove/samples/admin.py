@@ -52,7 +52,10 @@ class EnvironmentAdmin(admin.ModelAdmin):
 		}),
 		('Tower 3',{
 			'fields':[('tower3_A_temp','tower3_A_humi','tower3_A_pres')]
-		})
+		}),
+		('Exterior:',{
+			'fields':[('exterior_temp','exterior_humi','exterior_pres')]
+		}),
 	)
 
 class ToiletAdmin(admin.ModelAdmin):
