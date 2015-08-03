@@ -29,13 +29,16 @@ class StoolAdmin(admin.ModelAdmin):
 			'fields':['icu','room']
 		}),
 		('Patient',{
-			'fields':['stool_number','emr']
+			'fields':['emr']
 		}),
 		('Storage Location',{
 			'fields':['rack','box']
 		}),
 		('Notes',{
 			'fields':['notes']
+		}),
+		('EMR Check',{
+			'fields':['emr_check']
 		})
 	)
 
