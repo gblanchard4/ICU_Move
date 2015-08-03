@@ -12,7 +12,7 @@ class AirAdmin(admin.ModelAdmin):
 			'fields':['color','icu','pump','side']
 		}),
 		('Storage Location',{
-			'fields':['shelf','rack','box']
+			'fields':['rack','box']
 		}),
 		('Notes',{
 			'fields':['notes']
@@ -32,7 +32,7 @@ class StoolAdmin(admin.ModelAdmin):
 			'fields':['emr']
 		}),
 		('Storage Location',{
-			'fields':['shelf','rack','box']
+			'fields':['rack','box']
 		}),
 		('Notes',{
 			'fields':['notes']
@@ -66,7 +66,7 @@ class ToiletAdmin(admin.ModelAdmin):
 			'fields':['icu', 'room']
 		}),
 		('Storage Location',{
-			'fields':['shelf','rack','box']
+			'fields':['rack','box']
 		}),
 		('Notes',{
 			'fields':['notes']

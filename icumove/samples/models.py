@@ -44,7 +44,6 @@ class Air(models.Model):
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
 	# Storage Location
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
-	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
 	# Calculated
 	day = models.CharField(max_length=2, default='00')
@@ -59,7 +58,7 @@ class Air(models.Model):
 	# Unique together
 	class Meta:
 		unique_together = ("sample_date", "icu", "pump", "side")
-		unique_together = ("rack", "shelf", "box")
+		unique_together = ("rack", "box")
 
 	def clean(self):
 		# Validate unique Freezer/Shelf/Rack/Box
@@ -104,7 +103,6 @@ class Stool(models.Model):
 	emr = models.CharField(max_length=10, verbose_name="Epic Medical Record Number")
 	# Storage Location
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
-	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
 	# Calculated
 	day = models.CharField(max_length=2, default='00')
@@ -212,7 +210,6 @@ class Toilet(models.Model):
 	room = models.CharField(max_length=4, verbose_name="Room Number")
 	# Storage Location
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
-	shelf = models.CharField(max_length=2, verbose_name='Shelf', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
 	# Calculated
 	day = models.CharField(max_length=2, default='00')

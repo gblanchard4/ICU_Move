@@ -61,6 +61,24 @@ class Migration(migrations.Migration):
                 ('notes', models.TextField(verbose_name=b'Notes', blank=True)),
             ],
         ),
+        migrations.CreateModel(
+            name='Toilet',
+            fields=[
+                ('sample_date', models.DateField(verbose_name=b'Sample Date')),
+                ('icu', models.CharField(max_length=1, verbose_name=b'ICU Location', choices=[(b'1', b'UMC Tower-1'), (b'2', b'UMC Tower-2'), (b'3', b'UMC Tower-3')])),
+                ('room', models.CharField(max_length=4, verbose_name=b'Room Number')),
+                ('rack', models.CharField(max_length=2, verbose_name=b'Freezer Rack', blank=True)),
+                ('shelf', models.CharField(max_length=2, verbose_name=b'Shelf', blank=True)),
+                ('box', models.CharField(max_length=2, verbose_name=b'Box', blank=True)),
+                ('day', models.CharField(default=b'00', max_length=2)),
+                ('uid', models.CharField(max_length=16, unique=True, serialize=False, primary_key=True)),
+                ('notes', models.TextField(verbose_name=b'Notes', blank=True)),
+            ],
+        ),
+        migrations.AlterUniqueTogether(
+            name='toilet',
+            unique_together=set([('icu', 'room', 'sample_date')]),
+        ),
         migrations.AlterUniqueTogether(
             name='stool',
             unique_together=set([('sample_date', 'time', 'icu', 'room', 'emr')]),
