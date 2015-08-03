@@ -6,7 +6,7 @@ class AirAdmin(admin.ModelAdmin):
 	list_display = ('uid','sample_date','time','icu','pump','side', 'day')
 	fieldsets = (
 		('Date and Time',{
-			'fields':['sample_date','time']
+			'fields':['sample_date']
 		}),
 		('Collection Location',{
 			'fields':['color','icu','pump','side']
@@ -40,10 +40,10 @@ class StoolAdmin(admin.ModelAdmin):
 	)
 
 class EnvironmentAdmin(admin.ModelAdmin):
-	list_display  =('sample_date', 'time')
+	list_display  =('sample_date')
 	fieldsets = (
 		('Date',{
-			'fields':['sample_date', 'time']
+			'fields':['sample_date',]
 		}),
 		('Tower 1:',{
 			'fields':[('tower1_B_temp','tower1_B_humi','tower1_B_pres')]

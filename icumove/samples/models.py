@@ -26,7 +26,7 @@ class Air(models.Model):
 		('A', 'ICS Station A'),
 		('B', 'ICS Station B'),
 		('C', 'ICS Station C'),
-		('E', 'Outdoor')
+		('E', 'Exterior')
 	)
 
 	SIDE_CHOICES = (
@@ -36,11 +36,11 @@ class Air(models.Model):
 
 	# DateTime
 	sample_date = models.DateField(verbose_name="Sample Date: Date of Deployment")
-	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample: 24hr Clock")
+	#time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample: 24hr Clock")
 	# Sample Information
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 	color = models.CharField(max_length=1, choices=COLOR_CHOICES, verbose_name='Tape Color')
-	pump = models.CharField(max_length=1, choices=PUMP_CHOICES, verbose_name='Pump Number')
+	pump = models.CharField(max_length=1, choices=PUMP_CHOICES, verbose_name='Pump Letter')
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
 	# Storage Location
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
@@ -149,8 +149,11 @@ class Environment(models.Model):
 
 	# DateTime
 	sample_date = models.DateField(verbose_name="Sample Date")
-	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
+	#time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
 
+	exterior_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="Exterior: Temperature in C", blank=True, null=True)
+	exterior_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Exterior: Percent Relative Humidity", blank=True, null=True)
+	exterior_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="Exterior: Barometric Pressure", blank=True, null=True)
 	# Tower-1
 	tower1_B_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="ICS-B: Temperature in C", blank=True, null=True)
 	tower1_B_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="ICS-B: Percent Relative Humidity", blank=True, null=True)
