@@ -35,8 +35,8 @@ class Air(models.Model):
 	)
 
 	# DateTime
-	sample_date = models.DateField(verbose_name="Sample Date")
-	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
+	sample_date = models.DateField(verbose_name="Sample Date: Date of Deployment")
+	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample: 24hr Clock")
 	# Sample Information
 	icu = models.CharField(max_length=1, choices=ICU_CHOICES, verbose_name='ICU Location')
 	color = models.CharField(max_length=1, choices=COLOR_CHOICES, verbose_name='Tape Color')
@@ -152,38 +152,17 @@ class Environment(models.Model):
 	time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="Hour of Sample (24-hour Clock")
 
 	# Tower-1
-	tower1_E_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="Outdoor: Temperature in C", blank=True, null=True)
-	tower1_E_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Outdoor: Percent Relative Humidity", blank=True, null=True)
-	tower1_E_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="Outdoor: Barometric Pressure", blank=True, null=True)
-	tower1_A_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="ICS-A: Temperature in C", blank=True, null=True)
-	tower1_A_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="ICS-A: Percent Relative Humidity", blank=True, null=True)
-	tower1_A_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="ICS-A: Barometric Pressure", blank=True, null=True)
 	tower1_B_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="ICS-B: Temperature in C", blank=True, null=True)
 	tower1_B_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="ICS-B: Percent Relative Humidity", blank=True, null=True)
 	tower1_B_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="ICS-B: Barometric Pressure", blank=True, null=True)
-	tower1_C_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="ICS-C: Temperature in C", blank=True, null=True)
-	tower1_C_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="ICS-C: Percent Relative Humidity", blank=True, null=True)
-	tower1_C_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="ICS-C: Barometric Pressure", blank=True, null=True)
 	# Tower-2
-	tower2_E_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="Outdoor: Temperature in C", blank=True, null=True)
-	tower2_E_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Outdoor: Percent Relative Humidity", blank=True, null=True)
-	tower2_E_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="Outdoor: Barometric Pressure", blank=True, null=True)
-	tower2_A_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="ICS-A: Temperature in C", blank=True, null=True)
-	tower2_A_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="ICS-A: Percent Relative Humidity", blank=True, null=True)
-	tower2_A_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="ICS-A: Barometric Pressure", blank=True, null=True)
 	tower2_B_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="ICS-B: Temperature in C", blank=True, null=True)
 	tower2_B_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="ICS-B: Percent Relative Humidity", blank=True, null=True)
 	tower2_B_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="ICS-B: Barometric Pressure", blank=True, null=True)
-	tower2_C_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="ICS-C: Temperature in C", blank=True, null=True)
-	tower2_C_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="ICS-C: Percent Relative Humidity", blank=True, null=True)
-	tower2_C_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="ICS-C: Barometric Pressure", blank=True, null=True)
 	# Tower-3
 	tower3_A_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="ICS-A: Temperature in C", blank=True, null=True)
 	tower3_A_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="ICS-A: Percent Relative Humidity", blank=True, null=True)
 	tower3_A_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="ICS-A: Barometric Pressure", blank=True, null=True)
-	tower3_B_temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)],  verbose_name="ICS-B: Temperature in C", blank=True, null=True)
-	tower3_B_humi = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="ICS-B: Percent Relative Humidity", blank=True, null=True)
-	tower3_B_pres = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="ICS-B: Barometric Pressure", blank=True, null=True)
 
 	# Calculated
 	day = models.CharField(max_length=2, default='00')
