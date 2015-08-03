@@ -3,7 +3,7 @@ from .models import Air, Stool, Environment, Toilet
 
 # Admin Model views
 class AirAdmin(admin.ModelAdmin):
-	list_display = ('uid','sample_date','time','icu','pump','side', 'day')
+	list_display = ('uid','sample_date','icu','pump','side', 'day')
 	fieldsets = (
 		('Date and Time',{
 			'fields':['sample_date']
