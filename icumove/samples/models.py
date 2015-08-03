@@ -113,11 +113,12 @@ class Stool(models.Model):
 	notes = models.TextField(verbose_name="Notes", blank=True)
 
 	def __str__(self):
-		return str("S-{}-{}-{}".format(self.stool_number, self.room, self.sample_date.strftime('%m%d'))
+		return str("S-{}-{}-{}".format(self.stool_number, self.room, self.sample_date.strftime('%m%d')))
 
 	# Unique together
 	class Meta:
-		unique_together = ("sample_date", "time", "icu", "room", "emr", "stool_number"),
+		unique_together = ("sample_date", "time", "icu", "room", "emr")
+		unique_together = ("stool_number", "room", "sample_date")
 
 	# Clean Overide for Validation
 	def clean(self):
