@@ -174,8 +174,8 @@ class Environment(models.Model):
 	side = models.CharField(max_length=1, choices=SIDE_CHOICES, verbose_name='Pump Side')
 	# Measured
 	humidity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Percent Relative Humidity")
-	temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Temperature in F???")
-	pressure = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="Barometric Pressure")
+	temp = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], verbose_name="Temperature in C")
+	pressure = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="Barometric Pressure")
 	# Calculated
 	day = models.CharField(max_length=2, default='00')
 	uid = models.CharField(primary_key=True, max_length=16, unique=True)
