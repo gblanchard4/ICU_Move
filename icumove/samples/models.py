@@ -101,7 +101,7 @@ class Stool(models.Model):
 	room = models.CharField(max_length=4, verbose_name="Room Number")
 	# Metadata
 	emr = models.CharField(max_length=10, verbose_name="Epic Medical Record Number")
-	stool_number = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9)], verbose_name="The number stool collected"))
+	stool_number = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9)], verbose_name="The number stool collected")
 	# Storage Location
 	rack = models.CharField(max_length=2, verbose_name='Freezer Rack', blank=True)
 	box = models.CharField(max_length=2, verbose_name='Box', blank=True)
