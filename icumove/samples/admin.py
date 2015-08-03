@@ -40,7 +40,6 @@ class StoolAdmin(admin.ModelAdmin):
 	)
 
 class EnvironmentAdmin(admin.ModelAdmin):
-	list_display  =('sample_date')
 	fieldsets = (
 		('Date',{
 			'fields':['sample_date',]
